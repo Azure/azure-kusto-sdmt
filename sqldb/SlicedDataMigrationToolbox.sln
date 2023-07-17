@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SlicedDataMigrationToolbox", "SDMT_DB\SDMT_DB.sqlproj", "{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77489869-C8B9-4CFA-8016-D3B2DEC0AACB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F540C6E-4E3B-4EC5-8996-938D631FDC03}
+	EndGlobalSection
+EndGlobal

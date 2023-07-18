@@ -3,7 +3,7 @@
 
 Json Files with the structure that matches the ADX function -> Both must be adaped to each other.
 
-
+There will come a simpler way
 
 */
 

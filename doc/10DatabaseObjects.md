@@ -1,11 +1,25 @@
 
 ## Relvant database objects
 
+The solution provide a set of database objects. This are the most important ones from a user perspective:
+
+| Object   | Type | Purpose | Used in |
+| -------- | ---- | ------- | ------- | 
+| [Core].[SlicedImportObject] | Table | Contains the definition of the data slices and the status of the processing. You can add data by your self. But the most convinient way is to use the stored procedure `[Helper].[GenerateSliceMetaData]`. | -- |
+| [Helper].[GenerateSliceMetaData] | Stored Procedure | Helper stored procedure to generate records (slices) in the table `[Core].[SlicedImportObject]`. | Manually, T-SQL |
+| [Core].[GetSetSlicedImportObjectToLoad] | Stored Procedure | Get a list of slices to be loaded. The list can be filtered based on Source System, Schema and/or Object. And also based on the status of the slice (REGULAR, RESTART, ALL). | Pipeline |
+| [Core].[SetSlicedImportObjectStart]   | Stored Procedure |  Set to the current UTC date and time to `[LastStart]` (and other attributes) to signal the start of data transfer for a slice. Provides all the required meta data for the pipeline properties (e.g. folder path, file name, ...). | Pipeline |
+| [Core].[SetSlicedImportObjectEnd] | Stored Procedure | Set to the current UTC date and time to `LastSuccessEnd` (and other attributes) to signal the successful end of a data transfer for a slice. | Pipeline |
+| [Core].[SetSlicedImportObjectError] | Stored Procedure |  Set to the current UTC date and time to `[LastErrorEnd]`, indicating the time when the error occurred. Abd set to the value of the `@Error` parameter to `[LastErrorMessage]`. | Pipeline |
+
+<br>
+<br>
+
 ### Tables
 
 #### [Core].[SlicedImportObject]
 
-The table [Core].[SlicedImportObject] is used to store metadata about sliced import objects. It contains information such as the source system name, source schema, source object, destination schema, destination object, and more.
+The table `[Core].[SlicedImportObject]` is used to store metadata about sliced import objects. It contains information such as the source system name, source schema, source object, destination schema, destination object, and more.
 
 
 | AttributeName         | DataType         | DefaultValue                           | Description                                                                              |

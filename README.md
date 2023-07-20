@@ -135,6 +135,7 @@ With the combination of the log entries in Azure Data Factory/Synapse Piplelines
 ## Next steps
 
  * [Setup SDMT](./doc/01SetupSMDT.md)
+   * [Database Objects](./doc/10DatabaseObjects.md)
  * Load data to ADX 
    * [SQLToADXCopy](./doc/10SQLToADXCopy.md)
 

@@ -34,6 +34,17 @@ let tbl =
 tbl
 }
 
+.create-or-alter function  with (folder='Source', docstring='Get Measurement data from a SQL Server Database') Source_GetMeasurementFromSQLFullWhere(WhereCondition: string)
+{ 
+let tbl =  
+     evaluate 
+       sql_request('Server=tcp:<serverName>.database.windows.net,1433;Authentication="Active Directory Integrated";Initial Catalog=aamew4bg4iotsqldb',
+                   strcat('select * from Core.Measurement ', WhereCondition))
+                   : (Ts: datetime, Ts_Day: int, SignalId: int, MeasurementValue: real, MeasurementText: string, MeasurementContext: string, CreatedAt: datetime) 
+                  ;
+tbl
+}
+
 .execute database script <|
 .drop table Core_Measurement ifexists 
 .set-or-append  Core_Measurement with (folder='Core')
@@ -63,3 +74,29 @@ EXEC [Helper].[GenerateSliceMetaData]
 SELECT *
 FROM   [Mart].[SlicedImportObject]
 WHERE  SourceSystemName  = 'SQLToADX_ADXFunction'
+
+
+
+-- If @SourceSchema and @SourceObject are also specified, then they can be used to restrict transfer to specific objects
+DECLARE  @LowWaterMark     DATE         = '2022-11-18'   -- GE
+        ,@HigWaterMark     DATE         = '2022-11-20'   -- LT   
+        ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
+ 	    ,@SourceSystemName sysname      = 'SQLToADX_ADXFunctionFullWhere'
+   
+EXEC [Helper].[GenerateSliceMetaData] 
+         @LowWaterMark            = @LowWaterMark
+        ,@HigWaterMark            = @HigWaterMark
+        ,@Resolution              = @Resolution
+        ,@SourceSystemName        = @SourceSystemName
+		,@SourceSchema            = 'Core'
+ 		,@SourceObject            = 'Measurement'
+ 		,@DateFilterAttributeName = '[Ts]'
+ 		,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
+ 		,@GetDataADXCommand       = 'Source_GetMeasurementFromSQLFullWhere'
+ 		,@DestinationObject       = 'Core_Measurement'
+
+
+
+SELECT *
+FROM   [Mart].[SlicedImportObject]
+WHERE  SourceSystemName  = 'SQLToADX_ADXFunctionFullWhere'

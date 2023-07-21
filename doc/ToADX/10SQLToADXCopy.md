@@ -56,6 +56,9 @@ The transfer should happen in day slices (2021-11-25, 2021-11-26, 2021-11-27). T
 This will automatically generate a SQL statement 'SELECT * FROM Core.Measurement', assuming that all attributes sould be transferred.
 
 <br>
+
+![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXOverview.png)
+
 <br>
 
 You can specify the SQL statement by providing a value for the parmeter `@GetDataCommand`
@@ -82,7 +85,25 @@ You can specify the SQL statement by providing a value for the parmeter `@GetDat
 [Script to create the objects](../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_CopyActivity.sql)
 
 
-![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXOverview.png")
 
 #### Pipeline
+
+A pipeline pipeline to transfert the data from SQL to ADX using the copy activity will require the following aritifacts:
+ * Lookup to get a list of the slices
+ * ForEach activity to iterate over the list
+   * Loookup activity to record the start for the slice and to get the required property values
+   * An ADX command activity to clean up old data in the corresponding ADX slice (extent)
+   * A copy activity to do the data transfer
+   * Lookup activites to record the successful end or error, depending on the output of the copy activity
+
+
+**Pipeline Overview**
+![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineOverview.png)
+
+**Property Settings**
+![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineSettings.png)
+
+**Property Values at runtime**
+![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineValues.png)
+
 

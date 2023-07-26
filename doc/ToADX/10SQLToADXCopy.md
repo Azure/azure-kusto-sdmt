@@ -1,4 +1,4 @@
-## SQL to ADX
+## SQL to ADX using the copy activity 
 
 As simple way to transfer data from a SQL database (any relational database that is supported as a copy activity source) to ADX is to use a copy activity.
 <br>
@@ -154,3 +154,19 @@ You can either use is or adjust it to your specific needs.
 The system is now ready to be tested.
 
 
+#### Summary and next steps
+
+You have now a working pipeline to transfer data from a SQL database to an ADX database. The next step is to adjust the pipeline to your specific needs. You can also use the pipeline as a template for your own pipelines.
+
+<br>
+
+The advantage of using the copy activity is that you don't have to create any addition abjects in your ADX target database and that the whole process is very simple and transparent.
+The drawback is that you don't achieve the best ingest performance and that the data transfer can get more expensive that necessary.
+
+<br>
+
+There are other way to do the data transfer. You can either fetch the data from the SQL database using the sql_request function or you can write the data to a data lake and ingest the data from the data lake into ADX. The next sections will explain these options.
+
+More details are available in the files:
+ * [SQLToADX_ADXFunction.md](./SQLToADX_ADXFunction.md).
+ 

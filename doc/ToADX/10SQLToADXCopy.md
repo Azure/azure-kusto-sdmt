@@ -122,9 +122,11 @@ A pipeline pipeline to transfert the data from SQL to ADX using the copy activit
 
 Make sure that you have the required datasets and linked servers defined in your Azure Data Factory or in your Azure Synapse Analytics workspace. See also  [Setup](./../../doc/01SetupSMDT.md). 
 
-Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the json view and copy the code from the file [SDMT-SQL-Copy-ADX-Minimal.json](./SDMT-SQL-Copy-ADX-Minimal.json) into the pipeline.
+Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the json view and copy the code from the file [SDMT-SQL-Copy-ADX-Minimal.json](./../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-Minimal.json) into the pipeline.
 
-If you would like to have control over the data transfer, you can use the pipeline [SDMT-SQL-Copy-ADX-ConditionalDelete.json](./SDMT-SQL-Copy-ADX-ConditionalDelete.json). This pipeline has a conditional activity and a corresponding parameter to define if the target data slice should be deleted before the slice is transmitted. The pipeline 'SDMT-SQL-Copy-ADX-Minimal' will always delete the target data slice before the data is transmitted.
+
+
+If you would like to have control over the data transfer, you can use the pipeline [SDMT-SQL-Copy-ADX-ConditionalDelete.json](./../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-ConditionalDelete.json). This pipeline has a conditional activity and a corresponding parameter to define if the target data slice should be deleted before the slice is transmitted. The pipeline 'SDMT-SQL-Copy-ADX-Minimal' will always delete the target data slice before the data is transmitted.
 
 
 ##### Source and destination objects
@@ -134,7 +136,7 @@ Select the table that you would like to transfer from the source database and th
     SQL Source: [Core].[Measurement]
     ADX Destination: [Core_Measurement]
 
-You find the code to create the sample objects in the file [SQLToADX.sql](./SQLToADX.sql).
+You find the code to create the sample objects in the file [SQLtoADX_CopyActivity.sql](./../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_CopyActivity.sql).
 
 
 ##### Define Slice meta data

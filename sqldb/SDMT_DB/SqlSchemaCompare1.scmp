@@ -2,15 +2,15 @@
 <SchemaComparison>
   <Version>10</Version>
   <SourceModelProvider>
+    <ConnectionBasedModelProvider>
+      <ConnectionString>Data Source=adftopowerbi2.database.windows.net;Initial Catalog=ADFSlicedImport;User ID=meinrad.weiss@microsoft.com;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;Authentication="Active Directory Interactive"</ConnectionString>
+    </ConnectionBasedModelProvider>
+  </SourceModelProvider>
+  <TargetModelProvider>
     <ProjectBasedModelProvider>
       <ProjectGuid>{77489869-c8b9-4cfa-8016-d3b2dec0aacb}</ProjectGuid>
       <Name>SDMT_DB</Name>
     </ProjectBasedModelProvider>
-  </SourceModelProvider>
-  <TargetModelProvider>
-    <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=adftopowerbi2.database.windows.net;Initial Catalog=ADFSlicedImport;User ID=meinrad.weiss@microsoft.com;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;Authentication="Active Directory Interactive"</ConnectionString>
-    </ConnectionBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
     <SchemaCompareSettingsService>

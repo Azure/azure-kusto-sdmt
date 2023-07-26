@@ -133,6 +133,7 @@
     <Folder Include="Snapshots" />
     <Folder Include="ScriptToGenerateMetaTestData\ToADX" />
     <Folder Include="ScriptToGenerateMetaTestData\ToLake" />
+    <Folder Include="Core\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Core\Tables\SlicedImportObject.sql">
@@ -192,6 +193,10 @@
     <None Include="ScriptToGenerateMetaTestData\ToADX\SQLToLakeToADX_CopyActivityAndADXFunction.sql" />
     <None Include="ScriptToGenerateMetaTestData\ToLake\SQLToLakeMultipleFileToADX.sql" />
     <None Include="ScriptToGenerateMetaTestData\ToLake\SQLToLakeSingleFileToADX.sql" />
+    <Build Include="Core\Functions\GetADXcreationTimeAndTags.sql">
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

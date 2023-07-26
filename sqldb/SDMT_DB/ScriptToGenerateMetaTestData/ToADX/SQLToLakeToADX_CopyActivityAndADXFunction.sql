@@ -87,7 +87,7 @@ SELECT * FROM [Core].[Measurement]
      	    ,@SourceSchema            = 'Core'
      		,@SourceObject            = 'Measurement'
      		,@GetDataCommand          = 'SELECT [Ts], [SignalName], [MeasurementValue] FROM [Core].[Measurement]'
-     		,@GetDataADXCommand       = 'Source_GetMeasurementFromMeasurementSQLToLakeToADX'
+     		,@GetDataADXCommand       = 'Source_GetMeasurementFromSQL'
      		,@DateFilterAttributeName = '[Ts]'
      		,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
      		,@DestinationObject       = 'Measurement'

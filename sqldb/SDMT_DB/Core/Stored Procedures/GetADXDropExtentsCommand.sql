@@ -18,7 +18,8 @@ BEGIN
    )
    SELECT 
    		CONCAT(CASE WHEN RowNumber = 1 THEN '.execute database script <| ' + CHAR(13) +  CHAR(10) ELSE '' END 
-   		       ,CONCAT('.drop extents <| .show table ' , DestinationObject , ' extents  |  where MinCreatedOn ==  ''' ,  REPLACE(JSON_VALUE(AdditionalContext, '$.creationTime'), '.','-') ,'''' )
+   		       ,'.drop extents <| .show table ' + DestinationObject + ' extents where tags has ''' + 'ExtentFingerprint:' + [ExtentFingerprint] + '''' + CHAR(13) +  CHAR(10)
+
    		       ) DropExtends
    FROM OpenTransfer
 END

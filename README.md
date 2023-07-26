@@ -16,21 +16,20 @@ The sliced data migration toolbox provides framework components to simplify the 
 
 ### Main Benefits of the toolbox
 
-The toolbox provides the following main benefits
-
+The toolbox provides the following main benefits:
 * Proven framework to migrate data in an efficient and governed way.
-* Flexible architecture to support different scenarios. The pipelines can be integrated in a broader scenario, according to the project requirements.
-* Huge datasets can be loaded in well-defined slices.
-  * Slices can be loaded parallel (pipeline defines how many parallel loads are executed)
+* Flexible architecture to support different scenarios. It is possible to integrate the SDMT pipelines in a broader ETL/date migration scenario.
+* It is possible to load huge datasets in well-defined, small slices.
+  * Sequential and parallel load of the slices is supported (pipeline defines how many parallel loads are executed)
   * Data transfer workload can scale out over different integration runtimes to optimize performance.
   * If a slice fails, then it can be restarted, without data duplication.
 * 	The ADX property “creationTime” is set correctly. 
-* 	Transfer is logged in the meta data database (duration, number of rows transferred) and ADX tags provide additional information to each extent.
-  * "LoadedAt: <UTCDateTime of the start of the data transfer of this slice>"
-  * "SlicedImportObject_Id:<Primary key value of the slice in the SDMT meta data database>"
-  * "PipelineRun_Id:<Run id of the pipeline used for the tranfer>"
-  * "ExtentFingerprint:<Identification of the slice. Used to clean up a slice in the case of a reload"
-  *	"SourceFunction:<ADX function used to get data>"
+* 	Each data transfer is logged in the meta data database (duration, number of rows transferred) and ADX tags provide additional information to each extent.
+    * "LoadedAt: <UTCDateTime of the start of the data transfer of this slice>"
+    * "SlicedImportObject_Id:<Primary key value of the slice in the SDMT meta data database>"
+    * "PipelineRun_Id:<Run id of the pipeline used for the tranfer>"
+    * "ExtentFingerprint:<Identification of the slice. Used to clean up a slice in the case of a reload"
+    *	"SourceFunction:<ADX function used to get data>"
 * 	Simple pipelines with any complex logic, the required values are provided by the stored procedures of the toolbox.
 
 
@@ -66,7 +65,7 @@ If ADX is the target, then it is possible to choose one of the following paths.
 
 ### Meta data
 
-The whole datatransfer is steered by meta data. Depending on the scenario, different meta data is required. Common meta data is
+The whole data transfer is steered by meta data. Depending on the scenario, different meta data is required. Common meta data is:
  * Data transfer application name
  * Source object
  * Destination object
@@ -83,20 +82,20 @@ The whole datatransfer is steered by meta data. Depending on the scenario, diffe
 
 ### Big picture
 
-To transfer data from a source to a destination, the following steps are required.
+To transfer data from a source to a destination, the following steps are required:
  * Create the required objects in the metadata database and the destination database.
    * Create the meta data database (deploy the database project). 
    * Create the necessary ADX artifacts (tables, functions, ...)
  * Create slice meta data. The most efficient way is to use the stored procedure `[Helper].[GenerateSliceMetaData]`. 
  * Pick the corresponding ADF/Synapes pipeline, specify the required start parameters (@Mode=`REGULAR`) and execute it.
-   * If not all slices are loaded, then the pipeline can be restarted (@Mode=`RESTART`). The pipeline will only load the missing slices.
+   * If some slices failed to loaded, then the pipeline can be restarted (@Mode=`RESTART`). The pipeline will only re-load the missing slices.
 
 
 ### High level view on direct transfer pipeline
 
 </br>
 
-For a direct transfer of the data slices just a few activities are required and the properties can be filled by using the output of the stored procedures provided by the framework. This makes building the piplelines very efficient and also the maintenance can be done at a central place.
+For a direct transfer of the data slices just a few activities are required, and the properties can be filled by using the output of the stored procedures provided by the framework. This makes building the pipelines very efficient and the maintenance can be done at a central place.
 
 #### Example: Direct transfer to Azure ADX Database
 
@@ -109,7 +108,7 @@ For a direct transfer of the data slices just a few activities are required and 
 
 ### Reload of data slices
 
-If slices are not completed, then it will be reported in the meta data database.
+Failed loads of slices will will be reported in the meta data database.
 
 ![Overview](doc/assets/SDMT_LoadFailed.png "Failed load")
 
@@ -127,7 +126,7 @@ And a single slice can be reload in a controlled fashion.
 
 ### Handling of creationTime and tags
 
-One great feature of ADX is the functionality to define chaching policies and to keep selected data in the hot cache. To be able to decide if data should be available in the hot cache, ADX keeps track on the age via meta data in the extent definition. If historical data is loaded, then it is essential that we provide the age of the records via a "hint". The toolbox provides this information direct as a property. 
+One important feature of ADX is the functionality to define caching policies and to keep selected data in the hot cache. To be able to decide if data should be available in the hot cache, ADX keeps track on the age via meta data in the extent definition. If historical data is loaded, then it is essential that we provide the age of the records via a "hint". The toolbox provides this information direct as a property. 
 
 ![Overview](doc/assets/SDMT_LoadADX.png "Additional meta data")
 
@@ -135,7 +134,7 @@ One great feature of ADX is the functionality to define chaching policies and to
 </br>
 </br>
 
-With the combination of the log entries in Azure Data Factory/Synapse Piplelines, the SDMT tables and the ADX tags it is possible to get a full end to end view and relate pipeline runs to extents in ADX.
+With the combination of the log entries in Azure Data Factory/Synapse Pipelines, the SDMT tables and the ADX tags it is possible to get a full end to end view and relate pipeline runs to extents in ADX.
 
 
 ![EndToEndTelemetry](doc/assets/SDMT_EndToEndTelemetry.png "End to end Telemety")

@@ -5,7 +5,17 @@ As simple way to transfer data from a SQL database (any relational database that
 
 ### Scenario
 
+The following scenario is used to explain the concept. The source database is a SQL database and the destination is an ADX database. The data is transferred in day slices. The data is partitioned by the column `Ts`.
+The data is transferred from the source table `Core.Measurement` to the destination table `Measurement`. 
+
+![Senario Overview](./../../doc/assets/sql-to-adx/SMDT_SQLtoADXScenario.png)
+
+![Relationship between the artifacts](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXOverview.png)
+
+
 #### Objects in Source Database
+
+The sample reqires a SQL database with the following objects.
 
     CREATE SCHEMA [Core];
     GO
@@ -30,7 +40,11 @@ As simple way to transfer data from a SQL database (any relational database that
 
 #### Destination table in ADX
 
+The sample reqires a ADX database with the following objects.
+
     .create table Measurement (Ts:datetime, SignalName:string, MeasurementValue:decimal)
+
+<br>
 
 #### Transfer
 The transfer should happen in day slices (2021-11-25, 2021-11-26, 2021-11-27). Then you have to generate the slices with the following T-SQL command. <br>
@@ -41,14 +55,14 @@ The transfer should happen in day slices (2021-11-25, 2021-11-26, 2021-11-27). T
             ,@SourceSystemName sysname      = 'SQLToADX_CopyActivity'
     
     EXEC [Helper].[GenerateSliceMetaData] 
-             @LowWaterMark            = @LowWaterMark
+            @LowWaterMark            = @LowWaterMark
             ,@HigWaterMark            = @HigWaterMark
             ,@Resolution              = @Resolution
             ,@SourceSystemName        = @SourceSystemName
             ,@SourceSchema            = 'Core'
             ,@SourceObject            = 'Measurement'
             ,@DateFilterAttributeName = '[Ts]'
-            ,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
+            ,@DateFilterAttributeType = 'DATETIME2(3)' 
             ,@DestinationObject       = 'Measurement'
 
     GO
@@ -57,11 +71,9 @@ This will automatically generate a SQL statement 'SELECT * FROM Core.Measurement
 
 <br>
 
-![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXOverview.png)
 
-<br>
 
-You can specify the SQL statement by providing a value for the parmeter `@GetDataCommand`
+You can specify the SQL statement by providing a value for the parmeter `@GetDataCommand`. This allow you to restrict the columns that are transferred or to do any kind of required transformations on the source side.
 
     DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
             ,@HigWaterMark     DATE         = '2021-11-28'   -- LT   

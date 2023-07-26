@@ -81,6 +81,15 @@ The whole datatransfer is steered by meta data. Depending on the scenario, diffe
 </br>
 </br>
 
+### Big picture
+
+To transfer data from a source to a destination, the following steps are required.
+ * Create the required objects in the metadata database and the destination database.
+   * Create the meta data database (deploy the database project). 
+   * Create the necessary ADX artifacts (tables, functions, ...)
+ * Create slice meta data. The most efficient way is to use the stored procedure `[Helper].[GenerateSliceMetaData]`. 
+ * Pick the corresponding ADF/Synapes pipeline, specify the required start parameters (@Mode=`REGULAR`) and execute it.
+   * If not all slices are loaded, then the pipeline can be restarted (@Mode=`RESTART`). The pipeline will only load the missing slices.
 
 
 ### High level view on direct transfer pipeline
@@ -137,8 +146,7 @@ With the combination of the log entries in Azure Data Factory/Synapse Piplelines
  * [Setup SDMT](./doc/01SetupSMDT.md)
    * [Database Objects](./doc/10DatabaseObjects.md)
  * Load data to ADX 
-   * [SQLToADXCopy](./doc/10SQLToADXCopy.md)
-
+   * [SQLToADXCopy](./doc/ToADX/10SQLToADXCopy.md)
 
 
 ## Contributing

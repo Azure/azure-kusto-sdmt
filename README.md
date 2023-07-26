@@ -143,12 +143,12 @@ With the combination of the log entries in Azure Data Factory/Synapse Pipelines,
 ## Next steps
 
  * [Setup SDMT](./doc/01SetupSMDT.md)
-   * [Database Objects](./doc/10DatabaseObjects.md)
+
+ * Load data to ADX 
    * [Transfer SQL to ADX with the copy activity](./doc/ToADX/10SQLToADXCopy.md).
    * [Transfer SQL to ADX using ADX function](./doc/ToADX/20SQLToADX_ADXFunction.md).
- 
- * Load data to ADX 
-   * [SQLToADXCopy](./doc/ToADX/10SQLToADXCopy.md)
+ * Documentation
+   * [Database Objects](./doc/10DatabaseObjects.md)
 
 
 ## Contributing

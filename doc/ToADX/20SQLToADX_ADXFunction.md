@@ -20,6 +20,9 @@ You can find a step guide, how to define metadata and deploy the pipeline in [De
 #### Source Files
 
  * [Objects and SQL meta data](./../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/LakeToADX_ADXFunction.sql)
- * [Pipeline definition file](./../../pipelines/toADX/SQL-Copy-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX.json)
+ * [Pipeline definition file](./../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX.json)
 
 
+https://github.com/Azure/azure-kusto-sdmt/blob/add-docu-and-pipelines2/sqldb/SDMT_DB/ScriptToGenerateMetaTestData/LakeToADX_ADXFunction.sql
+
+https://github.com/Azure/azure-kusto-sdmt/blob/add-docu-and-pipelines2/sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_ADXFunction.sql

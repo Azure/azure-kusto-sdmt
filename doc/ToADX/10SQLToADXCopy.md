@@ -42,7 +42,7 @@ The sample reqires a SQL database with the following objects.
 
 The sample reqires a ADX database with the following objects.
 
-    .create table Measurement (Ts:datetime, SignalName:string, MeasurementValue:decimal)
+    .create table Core_Measurement (Ts: datetime, SignalName: string, MeasurementValue: real) with (folder = "Core")
 
 <br>
 
@@ -63,7 +63,7 @@ The transfer should happen in day slices (2021-11-25, 2021-11-26, 2021-11-27). T
             ,@SourceObject            = 'Measurement'
             ,@DateFilterAttributeName = '[Ts]'
             ,@DateFilterAttributeType = 'DATETIME2(3)' 
-            ,@DestinationObject       = 'Measurement'
+            ,@DestinationObject       = 'Core_Measurement'
 
     GO
 
@@ -94,9 +94,6 @@ You can specify the SQL statement by providing a value for the parmeter `@GetDat
 
 <br>
 
-[Script to create the objects](../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_CopyActivity.sql)
-
-
 
 #### Pipeline
 
@@ -117,5 +114,43 @@ A pipeline pipeline to transfert the data from SQL to ADX using the copy activit
 
 **Property Values at runtime**
 ![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineValues.png)
+
+
+#### Implement it yourself
+
+##### Create the pipeline
+
+Make sure that you have the required datasets and linked servers defined in your Azure Data Factory or in your Azure Synapse Analytics workspace. See also  [Setup](./../../doc/01SetupSMDT.md). 
+
+Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the json view and copy the code from the file [SDMT-SQL-Copy-ADX-Minimal.json](./SDMT-SQL-Copy-ADX-Minimal.json) into the pipeline.
+
+If you would like to have control over the data transfer, you can use the pipeline [SDMT-SQL-Copy-ADX-ConditionalDelete.json](./SDMT-SQL-Copy-ADX-ConditionalDelete.json). This pipeline has a conditional activity and a corresponding parameter to define if the target data slice should be deleted before the slice is transmitted. The pipeline 'SDMT-SQL-Copy-ADX-Minimal' will always delete the target data slice before the data is transmitted.
+
+
+##### Source and destination objects
+
+Select the table that you would like to transfer from the source database and the destination database. The sample uses the following objects.
+
+    SQL Source: [Core].[Measurement]
+    ADX Destination: [Core_Measurement]
+
+You find the code to create the sample objects in the file [SQLToADX.sql](./SQLToADX.sql).
+
+
+##### Define Slice meta data
+
+The slice meta data is used to control the data transfer. The sample uses the following values.
+
+    LowWaterMark: 2021-11-25
+    HighWaterMark: 2021-11-28
+    Resolution: Day
+    ...
+
+You can either use is or adjust it to your specific needs.
+
+
+##### Test it yourself
+
+The system is now ready to be tested.
 
 

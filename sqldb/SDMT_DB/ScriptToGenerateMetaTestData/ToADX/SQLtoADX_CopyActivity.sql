@@ -26,8 +26,7 @@ SELECT * FROM [Core].[Measurement]
 
 /* ADX destination
 
-.create table Measurement (Ts:datetime, SignalName:string, MeasurementValue:decimal)
-
+.create table Core_Measurement (Ts: datetime, SignalName: string, MeasurementValue: real) with (folder = "Core")
 
 */
 
@@ -36,21 +35,27 @@ SELECT * FROM [Core].[Measurement]
 DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
         ,@HigWaterMark     DATE         = '2021-11-28'   -- LT   
         ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
- 	    ,@SourceSystemName sysname      = 'SQLToADX_CopyActivity'
+        ,@SourceSystemName sysname      = 'SQLToADX_CopyActivity'
    
 EXEC [Helper].[GenerateSliceMetaData] 
          @LowWaterMark            = @LowWaterMark
         ,@HigWaterMark            = @HigWaterMark
         ,@Resolution              = @Resolution
         ,@SourceSystemName        = @SourceSystemName
- 	    ,@SourceSchema            = 'Core'
- 		,@SourceObject            = 'Measurement'
- 		,@DateFilterAttributeName = '[Ts]'
- 		,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
- 		,@DestinationObject       = 'Measurement'
+        ,@SourceSchema            = 'Core'
+        ,@SourceObject            = 'Measurement'
+        ,@DateFilterAttributeName = '[Ts]'
+        ,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
+        ,@DestinationObject       = 'Core_Measurement'
 
 GO
 
+
+-- check meta data
+
+SELECT *
+FROM   [Mart].[SlicedImportObject]
+WHERE  SourceSystemName  = 'SQLToADX_CopyActivity'
 
 
 
@@ -59,20 +64,23 @@ GO
 DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
         ,@HigWaterMark     DATE         = '2021-11-28'   -- LT   
         ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
- 	    ,@SourceSystemName sysname      = 'SQLToADX_CopyActivity'
+        ,@SourceSystemName sysname      = 'SQLToADX_CopyActivity'
    
 EXEC [Helper].[GenerateSliceMetaData] 
          @LowWaterMark            = @LowWaterMark
         ,@HigWaterMark            = @HigWaterMark
         ,@Resolution              = @Resolution
         ,@SourceSystemName        = @SourceSystemName
- 	    ,@SourceSchema            = 'Core'
- 		,@SourceObject            = 'Measurement'
- 		,@GetDataCommand          = 'SELECT [Ts], [SignalName], [MeasurementValue] FROM [Core].[Measurement]'
- 		,@DateFilterAttributeName = '[Ts]'
- 		,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
- 		,@DestinationObject       = 'Measurement'
+        ,@SourceSchema            = 'Core'
+        ,@SourceObject            = 'Measurement'
+        ,@GetDataCommand          = 'SELECT [Ts], [SignalName], [MeasurementValue] FROM [Core].[Measurement]'
+        ,@DateFilterAttributeName = '[Ts]'
+        ,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
+        ,@DestinationObject       = 'Core_Measurement'
 
+GO
+
+-- check meta data
 
 SELECT *
 FROM   [Mart].[SlicedImportObject]

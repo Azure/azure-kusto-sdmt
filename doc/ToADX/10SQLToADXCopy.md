@@ -168,5 +168,5 @@ The drawback is that you don't achieve the best ingest performance and that the 
 There are other way to do the data transfer. You can either fetch the data from the SQL database using the sql_request function or you can write the data to a data lake and ingest the data from the data lake into ADX. The next sections will explain these options.
 
 More details are available in the files:
- * [SQLToADX_ADXFunction.md](./SQLToADX_ADXFunction.md).
+ * [SQLToADX_ADXFunction.md](./20SQLToADX_ADXFunction.md).
  

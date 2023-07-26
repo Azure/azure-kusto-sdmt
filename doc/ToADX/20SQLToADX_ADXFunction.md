@@ -18,7 +18,6 @@ The data is transferred from the source table `Core.Measurement` to the destinat
 You can find a step guide, how to define metadata and deploy the pipeline in [Details](./10SQLToADXCopy.md)
 
 #### Source Files
-
  * [Objects and SQL meta data](./../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToADX_ADXFunction.sql)
  * [Pipeline definition file](./../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX.json)
 

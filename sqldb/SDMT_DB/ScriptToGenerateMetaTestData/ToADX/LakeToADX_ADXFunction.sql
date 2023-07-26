@@ -1,9 +1,9 @@
 ﻿/* Lake
 
+Parquet Files -> folder sampleFiles
 
-Json Files with the structure that matches the ADX function -> Both must be adaped to each other.
 
-There will come a simpler way.
+Copy the files in sampleFiles/SQLToLakeToADX to your storage account/container listed below.
 
 */
 
@@ -11,61 +11,43 @@ There will come a simpler way.
 
 
 
-
-.alter database Demo policy managed_identity ```
+.alter database SDMT_Demo policy managed_identity ```
 [
   {
-    "ObjectId": "aa5530a9-146f-4461-a9e0-2c847a2581e6",
+    "ObjectId": "<YourObjectId>",
     "AllowedUsages": "NativeIngestion, ExternalTable"
   }
 ]```
 
 
-.create-or-alter  external table Source_ExternalMeasurement (['timestamp']:long,['values']:dynamic,['EventProcessedUtcTime']:datetime,['PartitionId']:int,['EventEnqueuedUtcTime']:datetime,['IoTHub']:dynamic)
+.create-or-alter  external table Source_ExternalMeasurementExSQL (Ts:datetime,SignalName:string ,MeasurementValue:decimal)
 kind=storage 
 partition by (FileDate:datetime )
 pathformat = (datetime_pattern("yyyy/MM/dd", FileDate))
-    dataformat = multijson
+dataformat=parquet
     (
-        h@'abfss://<container>@<storageAccount>.dfs.core.windows.net/mich-iot-prod-sajob;impersonate'
+        h@'abfss://<ContainerName>@<StorageAccount>.dfs.core.windows.net/SQLToLakeToADX/Core/Measurement;managed_identity=system'
     )
-    with (FileExtension=json, folder='Source')
+    with (FileExtension=parquet, folder='Source')
 
 
+external_table('Source_ExternalMeasurementExSQL')
+ 
 
-.create-or-alter function  with (folder='Source', docstring='Get Measurement data from an external table') Source_GetMeasurementFromExternalMeasurement(Ts_Day: string)
-{ 
-external_table('Source_ExternalMeasurement')
-| where FileDate == Ts_Day
-| extend msg_IoTHub_ConnectionDeviceId=['IoTHub']['ConnectionDeviceId'], msg_IoTHub_EnqueuedTime=['IoTHub']['EnqueuedTime']
-| mv-expand bagexpansion=array values
-| extend timestamp, values.id, values.v, values.q, values.t
-| project msg_IoTHub_ConnectionDeviceId, msg_IoTHub_EnqueuedTime, timestamp, signalName=trim_start('_AdvancedTags.', tostring(values_id)), values_v, values_q, values_t
-| extend messageTimestamp=unixtime_milliseconds_todatetime(tolong(timestamp)), ts=unixtime_milliseconds_todatetime(tolong(values_t)), msg_IoTHub_EnqueuedTime=todatetime(msg_IoTHub_EnqueuedTime)
-| project msg_IoTHub_ConnectionDeviceId, signalName, ts, messageTimestamp, msg_IoTHub_EnqueuedTime,  values_v, values_q, measurementType=gettype(values_v)
-// one way to handle bool -> text true/false
-| extend measurementValue=case(measurementType != "bool", todouble(values_v), double(null))
-| extend measurementText= case(isnull(measurementValue), tostring(values_v), tostring(int(null)))
-| where toint(values_q) == 1
-| extend  company=split(signalName,'_')[0], location=split(signalName,'_')[1]
-| extend  signalNameEnd= substring(signalName, strlen(strcat(company, '_', location, '_')), strlen(signalName))
-| project-away measurementType, values_v, values_q
-| extend Ts=ts
-       , Ts_Day=toint(substring(replace_string(tostring(ts),'-',''),0,8))
-       , SignalId = toint(rand(1000))
-       , MeasurementValue=measurementValue
-       , MeasurementText=measurementText
-       , MeasurementContext=signalNameEnd
-       , CreatedAt=ts
-| project Ts, Ts_Day, SignalId,MeasurementValue, MeasurementText, MeasurementContext,CreatedAt       
+
+.create-or-alter function with (docstring = "Get Measurement data from external table Source_ExternalMeasurementExSQL and allows filtering on a specific day"
+                               ,folder = "Source") Source_GetMeasurementFromSource_ExternalMeasurementExSQL(Ts_Day:string) { 
+  external_table('Source_ExternalMeasurementExSQL')
+  | where FileDate == Ts_Day
+  | extend MeasurementValue=toreal(MeasurementValue)
+  | project-away FileDate
 }
-
 
 
 */
 
-    DECLARE  @LowWaterMark     DATE         = '2023-06-26'   -- GE
-            ,@HigWaterMark     DATE         = '2023-06-28'   -- LT   
+    DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
+            ,@HigWaterMark     DATE         = '2021-11-28'   -- LT
             ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
      	    ,@SourceSystemName sysname      = 'LakeToADX_ADXFunction'
        
@@ -77,7 +59,7 @@ external_table('Source_ExternalMeasurement')
             ,@SourceSystemName        = @SourceSystemName
      	    ,@SourceSchema            = 'N/A'
      		,@SourceObject            = 'N/A'
-     		,@GetDataADXCommand       = 'Source_GetMeasurementFromExternalMeasurement'
+     		,@GetDataADXCommand       = 'Source_GetMeasurementFromSource_ExternalMeasurementExSQL'
      		,@DestinationObject       = 'Core_Measurement'
 
 

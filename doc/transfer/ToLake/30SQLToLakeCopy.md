@@ -17,6 +17,6 @@ You can find a step guide, how to define metadata and deploy the pipeline in [De
 #### Source Files
  * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToLake/SQLToLakeMultipleFileToADX.sql)
  * Pipeline definition 
-   * [Pipeline using a copy activity](./../../../pipeline/toLake/SDMT-SQL-Lake.json)
+   * [Pipeline using a copy activity](./../../../pipeline/ToLake/SDMT-SQL-Lake.json)
    
 

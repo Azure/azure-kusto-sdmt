@@ -122,11 +122,11 @@ A pipeline pipeline to transfert the data from SQL to ADX using the copy activit
 
 Make sure that you have the required datasets and linked servers defined in your Azure Data Factory or in your Azure Synapse Analytics workspace. You can find a list of the required objects in: [Setup](./../../../doc/01SetupSMDT.md). 
 
-Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the json view and copy the code from the file [SDMT-SQL-Copy-ADX-Minimal.json](./../../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-Minimal.json) into the pipeline.
+Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the json view and copy the code from the file [SDMT-SQL-Copy-ADX-Minimal.json](./../../../pipeline/ToADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-Minimal.json) into the pipeline.
 
 
 
-If you would like to have control over the data transfer, you can use the pipeline [SDMT-SQL-Copy-ADX-ConditionalDelete.json](./../../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-ConditionalDelete.json). This pipeline has a conditional activity and a corresponding parameter to define if the target data slice should be deleted before the slice is transmitted. The pipeline 'SDMT-SQL-Copy-ADX-Minimal' will always delete the target data slice before the data is transmitted.
+If you would like to have control over the data transfer, you can use the pipeline [SDMT-SQL-Copy-ADX-ConditionalDelete.json](./../../../pipeline/ToADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-ConditionalDelete.json). This pipeline has a conditional activity and a corresponding parameter to define if the target data slice should be deleted before the slice is transmitted. The pipeline 'SDMT-SQL-Copy-ADX-Minimal' will always delete the target data slice before the data is transmitted.
 
 
 ##### Create the source and destination objects
@@ -174,6 +174,6 @@ There are other way to do the data transfer. You can either fetch the data from 
 More details are available in the files:
  * [Transfer SQL to ADX using ADX function](./20SQLToADX_ADXFunction.md)
  * [Transfer Lake to ADX using ADX function](./25LakeToADX_ADXFunction.md)
- * [Transfer SQL to Lake using copy activity](./../toLake/30SQLToLakeCopy.md)
+ * [Transfer SQL to Lake using copy activity](./../ToLake/30SQLToLakeCopy.md)
  * [Transfer SQL to Lake to ADX using copy activity and ADX function](./35SQLToLakeToADXFunction.md)
  

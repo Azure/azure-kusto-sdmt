@@ -145,11 +145,11 @@ With the combination of the log entries in Azure Data Factory/Synapse Pipelines,
  * [Setup SDMT](./doc/01SetupSMDT.md)
 
  * Load data to ADX 
-   * [Transfer SQL to ADX with the copy activity](./doc/ToADX/10SQLToADXCopy.md).
-   * [Transfer SQL to ADX using ADX function](./doc/ToADX/20SQLToADX_ADXFunction.md).
-   * [Transfer Lake to ADX using ADX function](./doc/ToADX/25LakeToADX_ADXFunction.md).
-   * [Transfer SQL to Lake using copy activity](./doc/ToLake/30SQLToLakeCopy.md).
-   * [Transfer SQL to Lake to ADX using copy activity and ADX function](./doc/ToADX/35SQLToLakeToADXFunction.md).
+   * [Transfer SQL to ADX with the copy activity](./doc/transfer/ToADX/10SQLToADXCopy.md).
+   * [Transfer SQL to ADX using ADX function](./doc/transfer/ToADX/20SQLToADX_ADXFunction.md).
+   * [Transfer Lake to ADX using ADX function](./doc/transfer/ToADX/25LakeToADX_ADXFunction.md).
+   * [Transfer SQL to Lake using copy activity](./doc/transfer/ToLake/30SQLToLakeCopy.md).
+   * [Transfer SQL to Lake to ADX using copy activity and ADX function](./doc/transfer/ToADX/35SQLToLakeToADXFunction.md).
  * Documentation
    * [Database Objects](./doc/10DatabaseObjects.md)
 

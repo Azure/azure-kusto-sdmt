@@ -11,6 +11,17 @@ The sliced data migration toolbox provides framework components to simplify the 
 ![TransferScenarios](doc/assets/SDMT_Iceberg.png "Iceberg")
 
 
+<br>
+
+## Table of Contents
+
+- [Main Benefits of the toolbox](#Main-Benefits-of-the-toolbox)
+- [Common transfer stages](#Common-transfer-stages)
+- [Meta data](#Meta-data)
+- [Big picture](#Big-picture)
+- [Next steps](#Next-steps)
+
+
 </br>
 </br>
 
@@ -31,6 +42,7 @@ The toolbox provides the following main benefits:
     * "ExtentFingerprint:<Identification of the slice. Used to clean up a slice in the case of a reload"
     *	"SourceFunction:<ADX function used to get data>"
 * 	Simple pipelines with any complex logic, the required values are provided by the stored procedures of the toolbox.
+
 
 
 </br>

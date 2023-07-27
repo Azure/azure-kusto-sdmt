@@ -16,8 +16,8 @@ The source is a table in the Azure SQL database `Core.Measurement` and the desti
 You can find a step guide, how to define metadata and deploy the pipeline in [Details](./10SQLToADXCopy.md)
 
 #### Source Files
- * [Required objects (SQL + ADX) and SQL meta data](./../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToLakeToADX_CopyActivityAndADXFunction.sql)
+ * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToLakeToADX_CopyActivityAndADXFunction.sql)
  * Pipeline definition 
-   * [Pipeline calling ADX function with one string parameter ('YYYYMMDD')](./../../pipeline/toADX/SQLtoLake-FunctionCall-ADX/SDMT-SQL-Lake-ADX-ViaFunctionTo-ADX-ConditionalDelete.json)
+   * [Pipeline calling ADX function with one string parameter ('YYYYMMDD')](./../../../pipeline/toADX/SQLtoLake-FunctionCall-ADX/SDMT-SQL-Lake-ADX-ViaFunctionTo-ADX-ConditionalDelete.json)
    
 

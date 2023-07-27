@@ -18,10 +18,10 @@ The data is transferred from the source table `Core.Measurement` to the destinat
 You can find a step guide, how to define metadata and deploy the pipeline in [Details](./10SQLToADXCopy.md)
 
 #### Source Files
- * [Required objects (SQL + ADX) and SQL meta data](./../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToADX_ADXFunction.sql)
+ * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToADX_ADXFunction.sql)
  * Pipeline definition 
-   * [Pipeline calling ADX function with one string parameter ('YYYYMMDD')](./../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX.json)
-   * [Pipeline calling ADX function with one string parameter ('YYYYMMDD'), conditional delete](./../../pipeline/toADX/SQLtoLake-FunctionCall-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX-ConditionalDelete.json)
-   * [Pipeline calling ADX function with one string parameter to pass the full where condition, conditional delete](./../../pipeline/toADX/SQLtoLake-FunctionCall-ADX/SDMT-SQL-ViaFullWhereFunctionTo-ADX-ConditionalDelete.json)
+   * [Pipeline calling ADX function with one string parameter ('YYYYMMDD')](./../../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX.json)
+   * [Pipeline calling ADX function with one string parameter ('YYYYMMDD'), conditional delete](./../../../pipeline/toADX/SQLtoLake-FunctionCall-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX-ConditionalDelete.json)
+   * [Pipeline calling ADX function with one string parameter to pass the full where condition, conditional delete](./../../../pipeline/toADX/SQLtoLake-FunctionCall-ADX/SDMT-SQL-ViaFullWhereFunctionTo-ADX-ConditionalDelete.json)
 
 

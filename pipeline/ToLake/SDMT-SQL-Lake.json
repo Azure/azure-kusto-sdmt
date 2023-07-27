@@ -1,0 +1,394 @@
+{
+    "name": "SDMT-SQL-Lake",
+    "properties": {
+        "activities": [
+            {
+                "name": "ForEach1",
+                "type": "ForEach",
+                "dependsOn": [
+                    {
+                        "activity": "GetSetSlicedImportObjectToLoad",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('GetSetSlicedImportObjectToLoad').output.value",
+                        "type": "Expression"
+                    },
+                    "isSequential": true,
+                    "activities": [
+                        {
+                            "name": "SetSlicedImportObjectStart",
+                            "type": "Lookup",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderStoredProcedureName": "[Core].[SetSlicedImportObjectStart]",
+                                    "storedProcedureParameters": {
+                                        "PipelineRunId": {
+                                            "type": "String",
+                                            "value": {
+                                                "value": "@pipeline().RunId",
+                                                "type": "Expression"
+                                            }
+                                        },
+                                        "SlicedImportObject_Id": {
+                                            "type": "Guid",
+                                            "value": {
+                                                "value": "@item().SlicedImportObject_Id",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "dataset": {
+                                    "referenceName": "SDMT_MetaData",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        },
+                        {
+                            "name": "SetSlicedImportObjectEnd",
+                            "type": "Lookup",
+                            "dependsOn": [
+                                {
+                                    "activity": "Copy data to lake",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderStoredProcedureName": "[Core].[SetSlicedImportObjectEnd]",
+                                    "storedProcedureParameters": {
+                                        "RowsTransferred": {
+                                            "type": "Int32",
+                                            "value": {
+                                                "value": "@activity('Copy data to lake').output.rowsCopied",
+                                                "type": "Expression"
+                                            }
+                                        },
+                                        "SlicedImportObject_Id": {
+                                            "type": "Guid",
+                                            "value": {
+                                                "value": "@item().SlicedImportObject_Id",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "dataset": {
+                                    "referenceName": "SDMT_MetaData",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        },
+                        {
+                            "name": "SetSlicedImportObjectError",
+                            "type": "Lookup",
+                            "dependsOn": [
+                                {
+                                    "activity": "Copy data to lake",
+                                    "dependencyConditions": [
+                                        "Failed"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderStoredProcedureName": "[Core].[SetSlicedImportObjectError]",
+                                    "storedProcedureParameters": {
+                                        "Error": {
+                                            "type": "String",
+                                            "value": {
+                                                "value": "@activity('Copy data to lake').Error.message",
+                                                "type": "Expression"
+                                            }
+                                        },
+                                        "SlicedImportObject_Id": {
+                                            "type": "Guid",
+                                            "value": {
+                                                "value": "@item().SlicedImportObject_Id",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "dataset": {
+                                    "referenceName": "SDMT_MetaData",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        },
+                        {
+                            "name": "FailFetchData",
+                            "type": "Fail",
+                            "dependsOn": [
+                                {
+                                    "activity": "SetSlicedImportObjectError",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "userProperties": [],
+                            "typeProperties": {
+                                "message": {
+                                    "value": "@activity('Copy data to lake').Error.message",
+                                    "type": "Expression"
+                                },
+                                "errorCode": {
+                                    "value": "@activity('Copy data to lake').Error.errorCode",
+                                    "type": "Expression"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Copy data to lake",
+                            "type": "Copy",
+                            "dependsOn": [
+                                {
+                                    "activity": "Delete existing data in lake",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderQuery": {
+                                        "value": "@activity('SetSlicedImportObjectStart').output.firstRow.SelectCommand",
+                                        "type": "Expression"
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "sink": {
+                                    "type": "ParquetSink",
+                                    "storeSettings": {
+                                        "type": "AzureBlobFSWriteSettings"
+                                    },
+                                    "formatSettings": {
+                                        "type": "ParquetWriteSettings",
+                                        "maxRowsPerFile": {
+                                            "value": "@activity('SetSlicedImportObjectStart').output.firstRow.MaxRowsPerFile",
+                                            "type": "Expression"
+                                        },
+                                        "fileNamePrefix": {
+                                            "value": "@activity('SetSlicedImportObjectStart').output.firstRow.DestinationFileName",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                },
+                                "enableStaging": false,
+                                "translator": {
+                                    "type": "TabularTranslator",
+                                    "typeConversion": true,
+                                    "typeConversionSettings": {
+                                        "allowDataTruncation": true,
+                                        "treatBooleanAsNumber": false
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "referenceName": "ADFToPowerBI2Generic",
+                                    "type": "DatasetReference",
+                                    "parameters": {
+                                        "DatabaseName": "AdventureWorksLT"
+                                    }
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "referenceName": "SMDT_DataLakeParquet",
+                                    "type": "DatasetReference"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Delete existing data in lake",
+                            "description": "Make sure, that old files are removed.",
+                            "type": "Delete",
+                            "dependsOn": [
+                                {
+                                    "activity": "SetSlicedImportObjectStart",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "dataset": {
+                                    "referenceName": "SMDT_DataLakeParquet",
+                                    "type": "DatasetReference"
+                                },
+                                "enableLogging": false,
+                                "storeSettings": {
+                                    "type": "AzureBlobFSReadSettings",
+                                    "recursive": true,
+                                    "enablePartitionDiscovery": false
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "GetSetSlicedImportObjectToLoad",
+                "description": "Get a list of the data slices to be transferred, based on the status and the start parameters.",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "sqlReaderStoredProcedureName": "[Core].[GetSetSlicedImportObjectToLoad]",
+                        "storedProcedureParameters": {
+                            "Mode": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.Mode",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SlicedImportObject_Id": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SlicedImportObject_Id",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SourceObject": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SourceObject",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SourceSchema": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SourceSchema",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SourceSystemName": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SourceSystemName",
+                                    "type": "Expression"
+                                }
+                            }
+                        },
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "dataset": {
+                        "referenceName": "SDMT_MetaData",
+                        "type": "DatasetReference"
+                    },
+                    "firstRowOnly": false
+                }
+            }
+        ],
+        "parameters": {
+            "SourceSystemName": {
+                "type": "string",
+                "defaultValue": "SQLToLake"
+            },
+            "Mode": {
+                "type": "string",
+                "defaultValue": "REGULAR"
+            },
+            "DropTargetExtent": {
+                "type": "bool",
+                "defaultValue": true
+            },
+            "SourceSchema": {
+                "type": "string",
+                "defaultValue": "%"
+            },
+            "SourceObject": {
+                "type": "string",
+                "defaultValue": "%"
+            },
+            "SlicedImportObject_Id": {
+                "type": "string",
+                "defaultValue": "%"
+            },
+            "ADX_DatabaseName": {
+                "type": "string",
+                "defaultValue": "SDMT_Demo"
+            }
+        },
+        "folder": {
+            "name": "SDMT/ToLake"
+        },
+        "annotations": [],
+        "lastPublishTime": "2023-07-24T14:59:07Z"
+    },
+    "type": "Microsoft.Synapse/workspaces/pipelines"
+}

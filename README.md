@@ -11,6 +11,17 @@ The sliced data migration toolbox provides framework components to simplify the 
 ![TransferScenarios](doc/assets/SDMT_Iceberg.png "Iceberg")
 
 
+<br>
+
+## Table of Contents
+
+- [Main Benefits of the toolbox](#Main-Benefits-of-the-toolbox)
+- [Common transfer stages](#Common-transfer-stages)
+- [Meta data](#Meta-data)
+- [Big picture](#Big-picture)
+- [Next steps](#Next-steps)
+
+
 </br>
 </br>
 
@@ -31,6 +42,7 @@ The toolbox provides the following main benefits:
     * "ExtentFingerprint:<Identification of the slice. Used to clean up a slice in the case of a reload"
     *	"SourceFunction:<ADX function used to get data>"
 * 	Simple pipelines with any complex logic, the required values are provided by the stored procedures of the toolbox.
+
 
 
 </br>
@@ -143,9 +155,16 @@ With the combination of the log entries in Azure Data Factory/Synapse Pipelines,
 ## Next steps
 
  * [Setup SDMT](./doc/01SetupSMDT.md)
-   * [Database Objects](./doc/10DatabaseObjects.md)
+
  * Load data to ADX 
-   * [SQLToADXCopy](./doc/ToADX/10SQLToADXCopy.md)
+   * [Transfer SQL to ADX with the copy activity](./doc/transfer/ToADX/10SQLToADXCopy.md).
+   * [Transfer SQL to ADX using ADX function](./doc/transfer/ToADX/20SQLToADX_ADXFunction.md).
+   * [Transfer Lake to ADX using ADX function](./doc/transfer/ToADX/25LakeToADX_ADXFunction.md).
+   * [Transfer SQL to Lake using copy activity](./doc/transfer/ToLake/30SQLToLakeCopy.md).
+   * [Transfer SQL to Lake to ADX using copy activity and ADX function](./doc/transfer/ToADX/35SQLToLakeToADXFunction.md).
+ * Documentation
+   * [Database Objects](./doc/10DatabaseObjects.md)
+   * [Pipeline Parameters](./doc/20PipelineParameters.md)
 
 
 ## Contributing

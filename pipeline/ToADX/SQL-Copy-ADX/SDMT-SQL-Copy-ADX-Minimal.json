@@ -1,0 +1,377 @@
+{
+    "name": "SDMT-SQL-Copy-ADX-Minimal",
+    "properties": {
+        "description": "Exec EXEC [Core].[ResetSlicedImportObject] 'SQLtoADX_Copy' in Meta DB to reset.",
+        "activities": [
+            {
+                "name": "ForEach1",
+                "type": "ForEach",
+                "dependsOn": [
+                    {
+                        "activity": "GetSetSlicedImportObjectToLoad",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('GetSetSlicedImportObjectToLoad').output.value",
+                        "type": "Expression"
+                    },
+                    "activities": [
+                        {
+                            "name": "SetSlicedImportObjectStart",
+                            "type": "Lookup",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderStoredProcedureName": "[Core].[SetSlicedImportObjectStart]",
+                                    "storedProcedureParameters": {
+                                        "PipelineRunId": {
+                                            "type": "String",
+                                            "value": {
+                                                "value": "@pipeline().RunId",
+                                                "type": "Expression"
+                                            }
+                                        },
+                                        "SlicedImportObject_Id": {
+                                            "type": "Guid",
+                                            "value": {
+                                                "value": "@item().SlicedImportObject_Id",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "dataset": {
+                                    "referenceName": "SDMT_MetaData",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        },
+                        {
+                            "name": "SetSlicedImportObjectEnd",
+                            "type": "Lookup",
+                            "dependsOn": [
+                                {
+                                    "activity": "Copy data to ADX",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderStoredProcedureName": "[Core].[SetSlicedImportObjectEnd]",
+                                    "storedProcedureParameters": {
+                                        "RowsTransferred": {
+                                            "type": "Int32",
+                                            "value": {
+                                                "value": "@activity('Copy data to ADX').output.rowsCopied",
+                                                "type": "Expression"
+                                            }
+                                        },
+                                        "SlicedImportObject_Id": {
+                                            "type": "Guid",
+                                            "value": {
+                                                "value": "@item().SlicedImportObject_Id",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "dataset": {
+                                    "referenceName": "SDMT_MetaData",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Copy data to ADX",
+                            "type": "Copy",
+                            "dependsOn": [
+                                {
+                                    "activity": "Drop existing extent",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderQuery": {
+                                        "value": "@activity('SetSlicedImportObjectStart').output.firstRow.SelectCommand",
+                                        "type": "Expression"
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "sink": {
+                                    "type": "AzureDataExplorerSink",
+                                    "ingestionMappingName": "",
+                                    "additionalProperties": {
+                                        "value": "@activity('SetSlicedImportObjectStart').output.firstRow.AdditionalContext",
+                                        "type": "Expression"
+                                    }
+                                },
+                                "enableStaging": false,
+                                "translator": {
+                                    "type": "TabularTranslator",
+                                    "typeConversion": true,
+                                    "typeConversionSettings": {
+                                        "allowDataTruncation": true,
+                                        "treatBooleanAsNumber": false
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "referenceName": "SDMT_SQLSource",
+                                    "type": "DatasetReference",
+                                    "parameters": {
+                                        "DatabaseName": "AdventureWorksLT"
+                                    }
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "referenceName": "SDMT_ADX_WithParameter",
+                                    "type": "DatasetReference",
+                                    "parameters": {
+                                        "TableName": {
+                                            "value": "@activity('SetSlicedImportObjectStart').output.firstRow.DestinationObject",
+                                            "type": "Expression"
+                                        },
+                                        "DatabaseName": {
+                                            "value": "@pipeline().parameters.ADX_DatabaseName",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SetSlicedImportObjectError",
+                            "type": "Lookup",
+                            "dependsOn": [
+                                {
+                                    "activity": "Copy data to ADX",
+                                    "dependencyConditions": [
+                                        "Failed"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "sqlReaderStoredProcedureName": "[Core].[SetSlicedImportObjectError]",
+                                    "storedProcedureParameters": {
+                                        "Error": {
+                                            "type": "String",
+                                            "value": {
+                                                "value": "@activity('Copy data to ADX').Error.message",
+                                                "type": "Expression"
+                                            }
+                                        },
+                                        "SlicedImportObject_Id": {
+                                            "type": "Guid",
+                                            "value": {
+                                                "value": "@item().SlicedImportObject_Id",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "dataset": {
+                                    "referenceName": "SDMT_MetaData",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Drop existing extent",
+                            "description": "",
+                            "type": "AzureDataExplorerCommand",
+                            "dependsOn": [
+                                {
+                                    "activity": "SetSlicedImportObjectStart",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "command": {
+                                    "value": "@activity('SetSlicedImportObjectStart').output.firstRow.ADXDropExtentCommand",
+                                    "type": "Expression"
+                                },
+                                "commandTimeout": "00:20:00"
+                            },
+                            "linkedServiceName": {
+                                "referenceName": "SDMT_ADX",
+                                "type": "LinkedServiceReference",
+                                "parameters": {
+                                    "DatabaseName": {
+                                        "value": "@pipeline().parameters.ADX_DatabaseName",
+                                        "type": "Expression"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "GetSetSlicedImportObjectToLoad",
+                "description": "Get a list of the data slices to be transferred, based on the status and the start parameters.",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "sqlReaderStoredProcedureName": "[Core].[GetSetSlicedImportObjectToLoad]",
+                        "storedProcedureParameters": {
+                            "Mode": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.Mode",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SlicedImportObject_Id": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SlicedImportObject_Id",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SourceObject": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SourceObject",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SourceSchema": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SourceSchema",
+                                    "type": "Expression"
+                                }
+                            },
+                            "SourceSystemName": {
+                                "type": "String",
+                                "value": {
+                                    "value": "@pipeline().parameters.SourceSystemName",
+                                    "type": "Expression"
+                                }
+                            }
+                        },
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "dataset": {
+                        "referenceName": "SDMT_MetaData",
+                        "type": "DatasetReference"
+                    },
+                    "firstRowOnly": false
+                }
+            }
+        ],
+        "parameters": {
+            "SourceSystemName": {
+                "type": "string",
+                "defaultValue": "SQLtoADX_CopyActivity"
+            },
+            "Mode": {
+                "type": "string",
+                "defaultValue": "REGULAR"
+            },
+            "DropTargetExtent": {
+                "type": "bool",
+                "defaultValue": true
+            },
+            "SourceSchema": {
+                "type": "string",
+                "defaultValue": "%"
+            },
+            "SourceObject": {
+                "type": "string",
+                "defaultValue": "%"
+            },
+            "SlicedImportObject_Id": {
+                "type": "string",
+                "defaultValue": "%"
+            },
+            "ADX_DatabaseName": {
+                "type": "string",
+                "defaultValue": "SDMT_Demo"
+            }
+        },
+        "folder": {
+            "name": "SDMT/ToADX/SQL-Copy-ADX"
+        },
+        "annotations": [],
+        "lastPublishTime": "2023-07-24T13:00:07Z"
+    },
+    "type": "Microsoft.Synapse/workspaces/pipelines"
+}

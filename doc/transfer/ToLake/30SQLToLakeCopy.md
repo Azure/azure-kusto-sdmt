@@ -12,7 +12,7 @@ The source is a table in the Azure SQL database `Core.Measurement` and the desti
 <br>
 <br>
 
-You can find a step guide, how to define metadata and deploy the pipeline in [Details](./10SQLToADXCopy.md)
+You can find a step guide, how to define metadata and deploy the pipeline in [Details](./../../transfer/ToADX/10SQLToADXCopy.md)
 
 #### Source Files
  * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToLake/SQLToLakeMultipleFileToADX.sql)

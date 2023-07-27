@@ -90,7 +90,7 @@ You can specify the SQL statement by providing a value for the parmeter `@GetDat
             ,@GetDataCommand          = 'SELECT [Ts], [SignalName], [MeasurementValue] FROM [Core].[Measurement]'
             ,@DateFilterAttributeName = '[Ts]'
             ,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
-            ,@DestinationObject       = 'Measurement'
+            ,@DestinationObject       = 'Core_Measurement'
 
 <br>
 
@@ -116,9 +116,9 @@ A pipeline pipeline to transfert the data from SQL to ADX using the copy activit
 ![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineValues.png)
 
 
-#### Implement it yourself
+#### You can implement it yourself by executing the following steps
 
-##### Create the pipeline
+##### Create the ADF/Synapse pipeline
 
 Make sure that you have the required datasets and linked servers defined in your Azure Data Factory or in your Azure Synapse Analytics workspace. See also  [Setup](./../../doc/01SetupSMDT.md). 
 
@@ -129,7 +129,7 @@ Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the j
 If you would like to have control over the data transfer, you can use the pipeline [SDMT-SQL-Copy-ADX-ConditionalDelete.json](./../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-ConditionalDelete.json). This pipeline has a conditional activity and a corresponding parameter to define if the target data slice should be deleted before the slice is transmitted. The pipeline 'SDMT-SQL-Copy-ADX-Minimal' will always delete the target data slice before the data is transmitted.
 
 
-##### Source and destination objects
+##### Create the source and destination objects
 
 Select the table that you would like to transfer from the source database and the destination database. The sample uses the following objects.
 
@@ -148,12 +148,14 @@ The slice meta data is used to control the data transfer. The sample uses the fo
     Resolution: Day
     ...
 
-You can either use is or adjust it to your specific needs.
+You can either use it as it is or adjust it to your specific needs.
+
+You find the code to create the sample meta data in the file [SQLtoADX_CopyActivity.sql](./../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_CopyActivity.sql).
 
 
-##### Test it yourself
+##### Test the transfer
 
-The system is now ready to be tested.
+The system is now ready to be tested. Just execute the pipeline and check the results in ADX and also in the meta data table `[Core].[SlicedImportObject]`.
 
 
 #### Summary and next steps
@@ -170,5 +172,8 @@ The drawback is that you don't achieve the best ingest performance and that the 
 There are other way to do the data transfer. You can either fetch the data from the SQL database using the sql_request function or you can write the data to a data lake and ingest the data from the data lake into ADX. The next sections will explain these options.
 
 More details are available in the files:
- * [SQLToADX_ADXFunction.md](./20SQLToADX_ADXFunction.md).
+ * [Transfer SQL to ADX using ADX function](./20SQLToADX_ADXFunction.md)
+ * [Transfer Lake to ADX using ADX function](./25LakeToADX_ADXFunction.md)
+ * [Transfer SQL to Lake using copy activity](./../toLake/30SQLToLakeCopy.md)
+ * [Transfer SQL to Lake to ADX using copy activity and ADX function](./35SQLToLakeToADXFunction.md)
  

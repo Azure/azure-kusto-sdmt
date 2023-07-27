@@ -120,7 +120,7 @@ A pipeline pipeline to transfert the data from SQL to ADX using the copy activit
 
 ##### Create the ADF/Synapse pipeline
 
-Make sure that you have the required datasets and linked servers defined in your Azure Data Factory or in your Azure Synapse Analytics workspace. See also  [Setup](./../../doc/01SetupSMDT.md). 
+Make sure that you have the required datasets and linked servers defined in your Azure Data Factory or in your Azure Synapse Analytics workspace. You can find a list of the required objects in: [Setup](./../../../doc/01SetupSMDT.md). 
 
 Create a new pipeline with the name 'SDMT-SQL-Copy-ADX-Minimal', switch to the json view and copy the code from the file [SDMT-SQL-Copy-ADX-Minimal.json](./../../../pipeline/toADX/SQL-Copy-ADX/SDMT-SQL-Copy-ADX-Minimal.json) into the pipeline.
 

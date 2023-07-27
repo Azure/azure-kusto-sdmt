@@ -8,9 +8,9 @@ As simple way to transfer data from a SQL database (any relational database that
 The following scenario is used to explain the concept. The source database is a SQL database and the destination is an ADX database. The data is transferred in day slices. The data is partitioned by the column `Ts`.
 The data is transferred from the source table `Core.Measurement` to the destination table `Measurement`. 
 
-![Senario Overview](./../../doc/assets/sql-to-adx/SMDT_SQLtoADXScenario.png)
+![Senario Overview](./../../../../doc/assets/sql-to-adx/SMDT_SQLtoADXScenario.png)
 
-![Relationship between the artifacts](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXOverview.png)
+![Relationship between the artifacts](./../../../../doc/assets/sql-to-adx/SDMT_SQLtoADXOverview.png)
 
 
 #### Objects in Source Database
@@ -107,13 +107,13 @@ A pipeline pipeline to transfert the data from SQL to ADX using the copy activit
 
 
 **Pipeline Overview**
-![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineOverview.png)
+![Relationship between meta data and pipeline](./../../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineOverview.png)
 
 **Property Settings**
-![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineSettings.png)
+![Relationship between meta data and pipeline](./../../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineSettings.png)
 
 **Property Values at runtime**
-![Relationship between meta data and pipeline](./../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineValues.png)
+![Relationship between meta data and pipeline](./../../../doc/assets/sql-to-adx/SDMT_SQLtoADXPipelineValues.png)
 
 
 #### You can implement it yourself by executing the following steps

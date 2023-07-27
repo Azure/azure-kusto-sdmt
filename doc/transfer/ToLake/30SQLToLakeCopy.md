@@ -7,7 +7,7 @@ As simple way to transfer data from a SQL database (any relational database that
 
 The source is a table in the Azure SQL database `Core.Measurement` and the destination is a folder structure with files in the data lake. The data is partitioned by a folder structure YYYY/MM/DD.
 
-![Senario Overview](./../../doc/assets/sql-to-adx/SMDT_SQLtoLakeScenario.png)
+![Senario Overview](./../../../doc/assets/sql-to-adx/SMDT_SQLtoLakeScenario.png)
 
 <br>
 <br>

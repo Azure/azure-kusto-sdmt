@@ -20,7 +20,7 @@ KQL syntax to create an external table is:
 The following scenario is used to explain the concept. The source is a folder structure with files in the data lake and the destination is an ADX database. The data is transferred in day slices. The data is partitioned by a folder structure YYYY/MM/DD.
 The data is transferred from lake to the destination table `Core_Measurement`. 
 
-![Senario Overview](./../../doc/assets/sql-to-adx/SMDT_LaketoADXScenario.png)
+![Senario Overview](./../../../doc/assets/sql-to-adx/SMDT_LaketoADXScenario.png)
 
 <br>
 <br>

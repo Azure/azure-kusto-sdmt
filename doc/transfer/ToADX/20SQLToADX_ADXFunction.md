@@ -10,7 +10,7 @@ ADX is capable to read data from a remote SQL Server database. The the sql_reque
 The following scenario is used to explain the concept. The source database is a SQL database and the destination is an ADX database. The data is transferred in day slices. The data is partitioned by the column `Ts`.
 The data is transferred from the source table `Core.Measurement` to the destination table `Core_Measurement`. 
 
-![Senario Overview](./../../doc/assets/sql-to-adx/SMDT_SQLtoADXFunctionScenario.png)
+![Senario Overview](./../../../doc/assets/sql-to-adx/SMDT_SQLtoADXFunctionScenario.png)
 
 <br>
 <br>

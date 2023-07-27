@@ -8,7 +8,7 @@ This is a combination of the two scenarios [SQL to Lake using an ADF/Synapse Pip
 The source is a table in the Azure SQL database `Core.Measurement` and the destination is the ADX table `Core_Measurement`. In the first step the slice is copied from the SQL database to the folder structure in the data lake. Then in a second step copied from the external table (ADX) to the final destination table.
 
 
-![Senario Overview](./../../doc/assets/sql-to-adx/SMDT_SQLtoLakeToADXFunctionScenario.png)
+![Senario Overview](./../../../doc/assets/sql-to-adx/SMDT_SQLtoLakeToADXFunctionScenario.png)
 
 <br>
 <br>

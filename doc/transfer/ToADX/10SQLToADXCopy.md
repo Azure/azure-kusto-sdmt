@@ -136,7 +136,7 @@ Select the table that you would like to transfer from the source database and th
     SQL Source: [Core].[Measurement]
     ADX Destination: [Core_Measurement]
 
-You find the code to create the sample objects in the file [SQLtoADX_CopyActivity.sql](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_CopyActivity.sql).
+You find the code to create the sample objects in the file [SQLtoADX_CopyActivity.sql](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToADX_CopyActivity.sql).
 
 
 ##### Define Slice meta data
@@ -150,7 +150,7 @@ The slice meta data is used to control the data transfer. The sample uses the fo
 
 You can either use it as it is or adjust it to your specific needs.
 
-You find the code to create the sample meta data in the file [SQLtoADX_CopyActivity.sql](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLtoADX_CopyActivity.sql).
+You find the code to create the sample meta data in the file [SQLtoADX_CopyActivity.sql](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/SQLToADX_CopyActivity.sql).
 
 
 ##### Test the transfer

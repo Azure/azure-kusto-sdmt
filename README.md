@@ -152,6 +152,7 @@ With the combination of the log entries in Azure Data Factory/Synapse Pipelines,
    * [Transfer SQL to Lake to ADX using copy activity and ADX function](./doc/transfer/ToADX/35SQLToLakeToADXFunction.md).
  * Documentation
    * [Database Objects](./doc/10DatabaseObjects.md)
+   * [Pipeline Parameters](./doc/20PipelineParameters.md)
 
 
 ## Contributing

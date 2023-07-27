@@ -34,3 +34,17 @@ You can find a step guide, how to define metadata and deploy the pipeline in [De
    * [Pipeline calling ADX function with one string parameter ('YYYYMMDD'), conditional delete](./../../../pipeline/ToADX/SQLtoLake-FunctionCall-ADX/SDMT-SQLorLake-ViaFunctionTo-ADX-ConditionalDelete.json)
 
 
+#### Sample data files
+
+If you just would like to test the pipeline, you can use the sample data files. The sample data files are located in the folder [.\sampleFiles](./../../../sampleFiles/SQLToLakeToADX)
+
+You will find files for three days:
+
+![Sample Files](./../../../doc/assets/sampleFiles/MeasurementSampleFiles.png)
+
+You can just copy the files to your data lake and test the import via the external table.
+
+
+
+
+        

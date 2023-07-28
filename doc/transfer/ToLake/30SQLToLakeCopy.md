@@ -1,3 +1,17 @@
+
+
+# Transfer data from SQL to the data lake using a copy activity
+
+
+## Table of Contents
+- [Transfer data from SQL to the data lake using a copy activity](#transfer-data-from-sql-to-the-data-lake-using-a-copy-activity)
+  - [Table of Contents](#table-of-contents)
+  - [SQL to Lake using an ADF/Synapse Pipeline copy activity](#sql-to-lake-using-an-adfsynapse-pipeline-copy-activity)
+    - [Scenario](#scenario)
+      - [Source Files](#source-files)
+
+<br>
+
 ## SQL to Lake using an ADF/Synapse Pipeline copy activity
 
 As simple way to transfer data from a SQL database (any relational database that is supported as a copy activity source) to the data lake is to use a copy activity.

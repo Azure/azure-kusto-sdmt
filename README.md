@@ -13,13 +13,22 @@ The sliced data migration toolbox provides framework components to simplify the 
 
 <br>
 
-## Table of Contents
+- [SDMT - Sliced data migration toolbox](#sdmt---sliced-data-migration-toolbox)
+  - [Overview](#overview)
+    - [Main Benefits of the toolbox](#main-benefits-of-the-toolbox)
+    - [Common transfer stages](#common-transfer-stages)
+    - [Meta data](#meta-data)
+    - [Big picture](#big-picture)
+    - [High level view on direct transfer pipeline](#high-level-view-on-direct-transfer-pipeline)
+      - [Example: Direct transfer to Azure ADX Database](#example-direct-transfer-to-azure-adx-database)
+    - [Reload of data slices](#reload-of-data-slices)
+    - [Handling of creationTime and tags](#handling-of-creationtime-and-tags)
+  - [Setup and next steps](#setup-and-next-steps)
+  - [Contributing](#contributing)
+  - [Trademarks](#trademarks)
 
-- [Main Benefits of the toolbox](#Main-Benefits-of-the-toolbox)
-- [Common transfer stages](#Common-transfer-stages)
-- [Meta data](#Meta-data)
-- [Big picture](#Big-picture)
-- [Next steps](#Next-steps)
+
+
 
 
 </br>
@@ -152,7 +161,7 @@ With the combination of the log entries in Azure Data Factory/Synapse Pipelines,
 ![EndToEndTelemetry](doc/assets/SDMT_EndToEndTelemetry.png "End to end Telemety")
 
 
-## Next steps
+## Setup and next steps
 
  * [Setup SDMT](./doc/01SetupSMDT.md)
 

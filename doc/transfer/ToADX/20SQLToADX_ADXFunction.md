@@ -1,3 +1,15 @@
+# Transfer data from SQL to ADX using the sql_request function
+
+
+## Table of content
+
+- [Transfer data from SQL to ADX using the sql\_request function](#transfer-data-from-sql-to-adx-using-the-sql_request-function)
+  - [Table of content](#table-of-content)
+  - [SQL to ADX using the sql\_request function](#sql-to-adx-using-the-sql_request-function)
+    - [Scenario](#scenario)
+      - [Source Files](#source-files)
+
+
 ## SQL to ADX using the sql_request function
 
 ADX is capable to read data from a remote SQL Server database. The the sql_request function is used to execute a SQL statement on a remote SQL Server database. The function returns a table with the result of the SQL statement. The function is used in the following way:

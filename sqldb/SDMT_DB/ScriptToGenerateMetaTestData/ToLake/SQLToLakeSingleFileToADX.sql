@@ -34,21 +34,21 @@ SELECT * FROM [Core].[Measurement]
     DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
             ,@HigWaterMark     DATE         = '2021-11-28'   -- LT   
             ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
-     	    ,@SourceSystemName sysname      = 'SQLToLakeSingleFileToADX'
-     	    ,@ContainerName    sysname      = 'slicedimport/singleFile'
+            ,@SourceSystemName sysname      = 'SQLToLakeSingleFileToADX'
+            ,@ContainerName    sysname      = 'slicedimport/singleFile'
        
     EXEC [Helper].[GenerateSliceMetaData] 
              @LowWaterMark            = @LowWaterMark
             ,@HigWaterMark            = @HigWaterMark
             ,@Resolution              = @Resolution
             ,@SourceSystemName        = @SourceSystemName
-     	    ,@SourceSchema            = 'Core'
-     		,@SourceObject            = 'Measurement'
-     		,@GetDataCommand          = 'SELECT [Ts], [SignalName], [MeasurementValue] FROM [Core].[Measurement]'
-     		,@DateFilterAttributeName = '[Ts]'
-     		,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
-     		,@DestinationObject       = 'Measurement'
-     		,@ContainerName           = @ContainerName
+            ,@SourceSchema            = 'Core'
+            ,@SourceObject            = 'Measurement'
+            ,@GetDataCommand          = 'SELECT [Ts], [SignalName], [MeasurementValue] FROM [Core].[Measurement]'
+            ,@DateFilterAttributeName = '[Ts]'
+            ,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
+            ,@DestinationObject       = 'Measurement'
+            ,@ContainerName           = @ContainerName
 
 
 SELECT *

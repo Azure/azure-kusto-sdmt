@@ -1,6 +1,30 @@
-## Details to come.
 
-Overview, deploy database project to an (Azure) SQL Server, create pipelines and meta data and let it rock.
+
+- [More automated setup details to come.](#more-automated-setup-details-to-come)
+  - [Big picture](#big-picture)
+  - [Meta data database setup](#meta-data-database-setup)
+  - [Azure Data Factory/Synapse Pipeline Datasets](#azure-data-factorysynapse-pipeline-datasets)
+  - [Linked Services](#linked-services)
+
+
+
+## More automated setup details to come.
+
+### Big picture
+
+1. Deploy database project to an (Azure) SQL Server
+2. Create/deploy linked server, datasets & pipelines in ADF/Synapse 
+3. generate meta data 
+
+... and let it rock.
+
+<br>
+
+### Meta data database setup
+
+The repository contains a database project below the folder `sqldb`. You can take the database project and deploy it to an Azure SQL database or to a SQL Server. The database project contains the required objects to run the sample pipelines. You can also use your own database and objects. 
+
+<br>
 
 ### Azure Data Factory/Synapse Pipeline Datasets
 

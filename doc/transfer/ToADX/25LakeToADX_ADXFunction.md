@@ -8,6 +8,7 @@
       - [Source Files](#source-files)
       - [Sample data files](#sample-data-files)
 
+<br>
 
 ## Lake to ADX using an external table and an ADX function
 

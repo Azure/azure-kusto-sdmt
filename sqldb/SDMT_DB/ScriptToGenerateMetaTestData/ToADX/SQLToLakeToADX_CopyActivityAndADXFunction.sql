@@ -21,7 +21,7 @@ For ADX object see: LakeToADX_ADXFunction.sql
             ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
             ,@SourceSystemName sysname      = 'SQLToLakeToADX_CopyActivityAndADXFunction'
             ,@ContainerName    sysname      = 'slicedimport'
-            ,@MaxRowsPerFile   int          = 1                          -- 1 just for demo purpose. Adjust it in your!
+            ,@MaxRowsPerFile   int          = 1000000 -- example 1M rows per file, should be adjusted to the size of the data (depends on the number of columns and the size of the columns)
 
 
     EXEC [Helper].[GenerateSliceMetaData] 

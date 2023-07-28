@@ -20,6 +20,7 @@
                         "value": "@activity('GetSetSlicedImportObjectToLoad').output.value",
                         "type": "Expression"
                     },
+                    "isSequential": false,
                     "activities": [
                         {
                             "name": "SetSlicedImportObjectStart",

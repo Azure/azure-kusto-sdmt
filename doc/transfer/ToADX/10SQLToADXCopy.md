@@ -1,3 +1,24 @@
+
+# Transfer SQL to ADX using copy activity
+
+## Table of content
+
+- [Transfer SQL to ADX using copy activity](#transfer-sql-to-adx-using-copy-activity)
+  - [Table of content](#table-of-content)
+  - [SQL to ADX using the copy activity](#sql-to-adx-using-the-copy-activity)
+    - [Scenario](#scenario)
+      - [Objects in Source Database](#objects-in-source-database)
+      - [Destination table in ADX](#destination-table-in-adx)
+      - [Transfer](#transfer)
+      - [Pipeline](#pipeline)
+      - [You can implement it yourself by executing the following steps](#you-can-implement-it-yourself-by-executing-the-following-steps)
+        - [Create the ADF/Synapse pipeline](#create-the-adfsynapse-pipeline)
+        - [Create the source and destination objects](#create-the-source-and-destination-objects)
+        - [Define Slice meta data](#define-slice-meta-data)
+        - [Test the transfer](#test-the-transfer)
+      - [Summary and next steps](#summary-and-next-steps)
+
+
 ## SQL to ADX using the copy activity 
 
 As simple way to transfer data from a SQL database (any relational database that is supported as a copy activity source) to ADX is to use a copy activity.

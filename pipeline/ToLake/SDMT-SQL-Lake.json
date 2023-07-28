@@ -19,7 +19,7 @@
                         "value": "@activity('GetSetSlicedImportObjectToLoad').output.value",
                         "type": "Expression"
                     },
-                    "isSequential": true,
+                    "isSequential": false,
                     "activities": [
                         {
                             "name": "SetSlicedImportObjectStart",
@@ -249,7 +249,17 @@
                             "outputs": [
                                 {
                                     "referenceName": "SMDT_DataLakeParquet",
-                                    "type": "DatasetReference"
+                                    "type": "DatasetReference",
+                                    "parameters": {
+                                        "Container": {
+                                            "value": "@activity('SetSlicedImportObjectStart').output.firstRow.ContainerName",
+                                            "type": "Expression"
+                                        },
+                                        "Directory": {
+                                            "value": "@activity('SetSlicedImportObjectStart').output.firstRow.DestinationPath",
+                                            "type": "Expression"
+                                        }
+                                    }
                                 }
                             ]
                         },

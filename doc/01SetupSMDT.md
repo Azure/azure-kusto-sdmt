@@ -1,4 +1,7 @@
+# Setup SMDT
 
+
+## Table of contents
 
 - [More automated setup details to come.](#more-automated-setup-details-to-come)
   - [Big picture](#big-picture)

@@ -1,11 +1,12 @@
-# Transfer data from SQL to ADX using the sql_request function
+# Transfer data from SQL to ADX using the sql_request plugin
 
 
 ## Table of content
 
-- [Transfer data from SQL to ADX using the sql\_request function](#transfer-data-from-sql-to-adx-using-the-sql_request-function)
+- [Transfer data from SQL to ADX using the sql\_request plugin](#transfer-data-from-sql-to-adx-using-the-sql_request-plugin)
   - [Table of content](#table-of-content)
   - [SQL to ADX using the sql\_request function](#sql-to-adx-using-the-sql_request-function)
+  - [Important note](#important-note)
     - [Scenario](#scenario)
       - [Source Files](#source-files)
 
@@ -16,6 +17,10 @@ ADX is capable to read data from a remote SQL Server database. The the sql_reque
 
     sql_request("Server=<server>;Database=<database>;User Id=<user>;Password=<password>", "SELECT * FROM Core.Measurement")
 <br>
+
+## Important note
+
+The for each loop is defined as `sequential`. If your ADX cluster is able to load more slices in parallel, you should change the for each loop to `parallel`.
 
 ### Scenario
 

@@ -49,7 +49,7 @@ external_table('Source_ExternalMeasurementExSQL')
     DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
             ,@HigWaterMark     DATE         = '2021-11-28'   -- LT
             ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
-     	    ,@SourceSystemName sysname      = 'LakeToADX_ADXFunction'
+            ,@SourceSystemName sysname      = 'LakeToADX_ADXFunction'
        
 
     EXEC [Helper].[GenerateSliceMetaData] 
@@ -57,10 +57,10 @@ external_table('Source_ExternalMeasurementExSQL')
             ,@HigWaterMark            = @HigWaterMark
             ,@Resolution              = @Resolution
             ,@SourceSystemName        = @SourceSystemName
-     	    ,@SourceSchema            = 'N/A'
-     		,@SourceObject            = 'N/A'
-     		,@GetDataADXCommand       = 'Source_GetMeasurementFromSource_ExternalMeasurementExSQL'
-     		,@DestinationObject       = 'Core_Measurement'
+            ,@SourceSchema            = 'N/A'
+            ,@SourceObject            = 'N/A'
+            ,@GetDataADXCommand       = 'Source_GetMeasurementFromSource_ExternalMeasurementExSQL'
+            ,@DestinationObject       = 'Core_Measurement'
 
 
 

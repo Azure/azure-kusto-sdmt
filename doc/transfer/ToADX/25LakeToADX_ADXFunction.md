@@ -1,3 +1,14 @@
+# Transfer data from Lake to ADX using an ADX function and an external table
+
+# Table of Contents
+- [Transfer data from Lake to ADX using an ADX function and an external table](#transfer-data-from-lake-to-adx-using-an-adx-function-and-an-external-table)
+- [Table of Contents](#table-of-contents)
+  - [Lake to ADX using an external table and an ADX function](#lake-to-adx-using-an-external-table-and-an-adx-function)
+    - [Scenario](#scenario)
+      - [Source Files](#source-files)
+      - [Sample data files](#sample-data-files)
+
+
 ## Lake to ADX using an external table and an ADX function
 
 ADX is capable to read data from files in the data lake. This is done via an external table. The external table is defined in ADX and points to the files in the data lake. An ADX function is used to filter the data in the data lake. 

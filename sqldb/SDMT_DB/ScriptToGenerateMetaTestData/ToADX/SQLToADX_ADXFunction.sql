@@ -71,17 +71,17 @@ tbl
 DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
         ,@HigWaterMark     DATE         = '2021-11-28'   -- LT   
         ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
- 	    ,@SourceSystemName sysname      = 'SQLToADX_ADXFunction'
+        ,@SourceSystemName sysname      = 'SQLToADX_ADXFunction'
    
 EXEC [Helper].[GenerateSliceMetaData] 
          @LowWaterMark            = @LowWaterMark
         ,@HigWaterMark            = @HigWaterMark
         ,@Resolution              = @Resolution
         ,@SourceSystemName        = @SourceSystemName
-		,@SourceSchema            = 'Core'
- 		,@SourceObject            = 'Measurement'
- 		,@GetDataADXCommand       = 'Source_GetMeasurementFromSQL'
- 		,@DestinationObject       = 'Core_Measurement'
+        ,@SourceSchema            = 'Core'
+        ,@SourceObject            = 'Measurement'
+        ,@GetDataADXCommand       = 'Source_GetMeasurementFromSQL'
+        ,@DestinationObject       = 'Core_Measurement'
 
 
 
@@ -95,19 +95,19 @@ WHERE  SourceSystemName  = 'SQLToADX_ADXFunction'
 DECLARE  @LowWaterMark     DATE         = '2021-11-25'   -- GE
         ,@HigWaterMark     DATE         = '2021-11-28'   -- LT   
         ,@Resolution       VARCHAR(25)  = 'Day'   -- Day/Month
- 	    ,@SourceSystemName sysname      = 'SQLToADX_ADXFunctionFullWhere'
+        ,@SourceSystemName sysname      = 'SQLToADX_ADXFunctionFullWhere'
    
 EXEC [Helper].[GenerateSliceMetaData] 
          @LowWaterMark            = @LowWaterMark
         ,@HigWaterMark            = @HigWaterMark
         ,@Resolution              = @Resolution
         ,@SourceSystemName        = @SourceSystemName
-		,@SourceSchema            = 'Core'
- 		,@SourceObject            = 'Measurement'
- 		,@DateFilterAttributeName = '[Ts]'
- 		,@DateFilterAttributeType = 'DATETIME2(3)' -- Datatype should match to source table
- 		,@GetDataADXCommand       = 'Source_GetMeasurementFromSQLFullWhere'
- 		,@DestinationObject       = 'Core_Measurement'
+        ,@SourceSchema            = 'Core'
+        ,@SourceObject            = 'Measurement'
+        ,@DateFilterAttributeName = '[Ts]'
+        ,@DateFilterAttributeType = 'DATETIME2(3)'                             -- Datatype should match to source table
+        ,@GetDataADXCommand       = 'Source_GetMeasurementFromSQLFullWhere'
+        ,@DestinationObject       = 'Core_Measurement'
 
 
 

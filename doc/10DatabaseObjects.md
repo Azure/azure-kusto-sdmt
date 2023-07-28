@@ -1,4 +1,30 @@
 
+# Database Objects
+
+The provided meta data dabase contains a set of tables, views and stored procedures. The most important ones are described here.
+
+## Table of contents
+
+- [Database Objects](#database-objects)
+  - [Table of contents](#table-of-contents)
+  - [Relevant database objects](#relevant-database-objects)
+    - [Tables](#tables)
+      - [\[Core\].\[SlicedImportObject\]](#coreslicedimportobject)
+    - [Stored procdures](#stored-procdures)
+      - [\[Helper\].\[GenerateSliceMetaData\]](#helpergenerateslicemetadata)
+      - [\[Helper\].\[DropExistingSliceMetaData\]](#helperdropexistingslicemetadata)
+      - [\[Core\].\[GetSetSlicedImportObjectToLoad\]](#coregetsetslicedimportobjecttoload)
+      - [\[Core\].\[GetADXDropExtentsCommand\]](#coregetadxdropextentscommand)
+      - [\[Core\].\[ResetSlicedImportObject\]](#coreresetslicedimportobject)
+      - [\[Core\].\[SetSlicedImportObjectEnd\]](#coresetslicedimportobjectend)
+      - [\[Core\].\[SetSlicedImportObjectError\]](#coresetslicedimportobjecterror)
+      - [\[Core\].\[SetSlicedImportObjectStart\]](#coresetslicedimportobjectstart)
+    - [Views](#views)
+      - [\[Mart\].\[SlicedImportObject\]](#martslicedimportobject)
+      - [\[Mart\].\[SuspectSlicedImportObject\]](#martsuspectslicedimportobject)
+
+
+
 ## Relevant database objects
 
 The solution provides a set of database objects. This are the most important ones from a user perspective:

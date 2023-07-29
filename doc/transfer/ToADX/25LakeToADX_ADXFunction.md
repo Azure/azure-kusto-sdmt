@@ -39,6 +39,13 @@ The data is transferred from lake to the destination table `Core_Measurement`.
 
 You can find a step guide, how to define metadata and deploy the pipeline in [Details](./10SQLToADXCopy.md)
 
+
+## Important note
+
+The for each loop in the pipeline is defined as `sequential`. If your ADX cluster is able to load more slices in parallel, you should change the for each loop to `parallel`.
+
+<br>
+
 #### Source Files
  * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ToADX/LakeToADX_ADXFunction.sql)
  * Pipeline definition 

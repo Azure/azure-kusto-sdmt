@@ -20,7 +20,7 @@ ADX is capable to read data from a remote SQL Server database. The the sql_reque
 
 ## Important note
 
-The for each loop is defined as `sequential`. If your ADX cluster is able to load more slices in parallel, you should change the for each loop to `parallel`.
+The for each loop in the pipeline is defined as `sequential`. If your ADX cluster is able to load more slices in parallel, you should change the for each loop to `parallel`.
 
 ### Scenario
 

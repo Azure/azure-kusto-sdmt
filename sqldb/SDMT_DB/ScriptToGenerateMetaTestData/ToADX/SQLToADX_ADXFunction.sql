@@ -43,7 +43,7 @@ SELECT * FROM [Core].[Measurement]
 let tbl =  
      evaluate 
        sql_request('Server=tcp:<serverName>.database.windows.net,1433;Authentication="Active Directory Integrated";Initial Catalog=AdventureWorksLT',
-                   strcat("SELECT * FROM Core.Measurement WHERE Ts > DATEADD(DAY , -1, CONVERT(DATETIME, '", Ts_Day, "',102)) AND tS < DATEADD(DAY , 1, CONVERT(DATETIME, '", Ts_Day, "', 102))"))
+                   strcat("SELECT * FROM Core.Measurement WHERE Ts >= CONVERT(DATETIME, '", Ts_Day, "',102) AND tS < DATEADD(DAY , 1, CONVERT(DATETIME, '", Ts_Day, "', 102))"))
                    : (Ts: datetime,  SignalName: string, MeasurementValue: real) 
                   ;
 tbl

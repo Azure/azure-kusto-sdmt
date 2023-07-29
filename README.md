@@ -174,6 +174,7 @@ With the combination of the log entries in Azure Data Factory/Synapse Pipelines,
  * Documentation
    * [Database Objects](./doc/10DatabaseObjects.md)
    * [Pipeline Parameters](./doc/20PipelineParameters.md)
+   * [Tips and Tricks plus Q&A](./doc/90TipsAndTricks_QaA.md)
 
 
 ## Contributing

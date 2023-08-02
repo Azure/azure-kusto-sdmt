@@ -61,7 +61,8 @@ The toolbox provides the following main benefits:
 Depending on the shape of the pipeline you can choose one of the following options:
  * SQL Source[^1] -> Database destination (e.g. ADX, SQL, PostgreSQL, ...) [^2] 
  * SQL Source[^1] -> Data lake  
- * SQL Source[^1] -> Data lake -> Database destination (e.g. ADX, SQL, PostgreSQL, ...)[^2] 
+ * SQL Source[^1] -> Data lake -> Database destination (e.g. ADX, SQL, PostgreSQL, ...)[^2]
+ * ADX Source -> Data lake (via external table)
  
 ![TransferScenarios](doc/assets/SDMT_TransferScenarios.png "Supported transfer scenarios")
 

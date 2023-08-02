@@ -92,7 +92,8 @@ BEGIN
            ,[GetDataCommand]
            ,[GetDataADXCommand]
            ,[FilterDataCommand]
-           ,[FilterDataADXCommand]
+           ,[LowWaterMark]
+           ,[HighWaterMark]
            ,[DestinationSchema]
            ,[DestinationObject]
            ,[ContainerName]
@@ -112,7 +113,8 @@ BEGIN
            ,'WHERE ' + @DateFilterAttributeName + ' >= CONVERT(' + @DateFilterAttributeType + ', ''' + CONVERT(VARCHAR, @TheDate, 23) + ''', 120) AND ' 
 			          + @DateFilterAttributeName + ' < CONVERT(' + @DateFilterAttributeType + ', ''' + CONVERT(VARCHAR, @NextDate, 23) + ''', 120)' 
 			  							                  AS [FilterDataCommand]
-           ,CONVERT(VARCHAR, @TheDate,112)                AS [FilterDataADXCommand]
+           ,CONVERT(VARCHAR, @TheDate,112)                AS [LowWaterMark]
+           ,CONVERT(VARCHAR, @NextDate,112)               AS [HighWaterMark]
            ,@DestinationSchema AS [DestinationSchema]
            ,@DestinationObject AS [DestinationObject]
            ,@ContainerName     AS [ContainerName]

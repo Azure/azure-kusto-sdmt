@@ -25,12 +25,14 @@ BEGIN
 	    ,[FilterDataCommand]
         ,[GetDataCommand] + ' ' + [FilterDataCommand] AS [SelectCommand]
 		 ,'.set-or-append ' + [DestinationObject] +	[Core].[GetADXcreationTimeAndTags] ([AdditionalContext], @SlicedImportObject_Id, @PipelineRunId, [ExtentFingerprint], [GetDataADXCommand])
-		    + ' <| ' + [GetDataADXCommand] + '(' + [FilterDataADXCommand] + ')'                         AS [ADXFetchCommand]
+		    + ' <| ' + [GetDataADXCommand] + '(' + [LowWaterMark] + ')'                         AS [ADXFetchCommand]
 		 ,'.set-or-append ' + [DestinationObject] +	[Core].[GetADXcreationTimeAndTags] ([AdditionalContext], @SlicedImportObject_Id, @PipelineRunId, [ExtentFingerprint], [GetDataADXCommand])
 		    + ' <| ' + [GetDataADXCommand] + '("' + [FilterDataCommand] + '")'                          AS [ADXFetchCommandFullWhere]
 		 ,'.set-or-append ' + [DestinationObject] +	[Core].[GetADXcreationTimeAndTags] ([AdditionalContext], @SlicedImportObject_Id, @PipelineRunId, [ExtentFingerprint], [GetDataADXCommand])
 		    + ' <| ' + [GetDataADXCommand] + '("' + [GetDataCommand] + ' ' + [FilterDataCommand] + '")' AS [ADXFetchCommandFullSQLAndWhere]
         ,'IF OBJECT_ID(''' + QUOTENAME([DestinationSchema]) + '.' + QUOTENAME([DestinationObject]) + ''') IS NOT NULL DELETE FROM ' + QUOTENAME([DestinationSchema]) + '.' + QUOTENAME([DestinationObject]) + ' ' + [FilterDataCommand] AS [EmptyDestinationSliceCommand]
+
+		 ,'.export to table  ' + [DestinationObject] + ' <| ' + [SourceObject] + ' | where startofday(' + [DateFilterAttributeName] + ') >= todatetime(''' + [LowWaterMark] +''') and startofday(' + [DateFilterAttributeName] + ') < todatetime(''' + [HighWaterMark] +''')  ' AS [ADXExportCommand]
 	    ,[DestinationSchema] 
 	    ,[DestinationObject] 
 		,[ContainerName]

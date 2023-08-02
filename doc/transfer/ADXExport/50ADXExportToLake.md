@@ -33,7 +33,7 @@ The loop in the sample pipeline is defined a sequential. If you have a cluster w
 You can find a step guide, how to define metadata and deploy the pipeline in [Details](./10SQLToADXCopy.md)
 
 #### Source Files
- * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/MT_DB/ScriptToGenerateMetaTestData/ADXExport/ADX_ExportToLake.sql)
+ * [Required objects (SQL + ADX) and SQL meta data](./../../../sqldb/SDMT_DB/ScriptToGenerateMetaTestData/ADXExport/ADX_ExportToLake.sql)
  * Pipeline definition 
    * [Pipeline calling ADX function with one string parameter ('YYYYMMDD')](./../../../pipeline/ToADX/SQLtoLake-FunctionCall-ADX/SDMT-SQL-Lake-ADX-ViaFunctionTo-ADX-ConditionalDelete.json)
    

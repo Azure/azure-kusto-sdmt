@@ -89,6 +89,7 @@ BEGIN
            ([SourceSystemName]
            ,[SourceSchema]
            ,[SourceObject]
+           ,[DateFilterAttributeName]
            ,[GetDataCommand]
            ,[GetDataADXCommand]
            ,[FilterDataCommand]
@@ -105,19 +106,20 @@ BEGIN
            ,[ExtentFingerprint]
 		   )
        SELECT  
-            @SourceSystemName  AS [SourceSystemName]
-           ,@SourceSchema      AS [SourceSchema]
-           ,@SourceObject      AS [SourceObject]
-           ,@GetDataCommand    AS [GetDataCommand]
-           ,@GetDataADXCommand AS [GetDataADXCommand]
+            @SourceSystemName                             AS [SourceSystemName]
+           ,@SourceSchema                                 AS [SourceSchema]
+           ,@SourceObject                                 AS [SourceObject]
+           ,@DateFilterAttributeName                      AS [DateFilterAttributeName]
+           ,@GetDataCommand                               AS [GetDataCommand]
+           ,@GetDataADXCommand                            AS [GetDataADXCommand]
            ,'WHERE ' + @DateFilterAttributeName + ' >= CONVERT(' + @DateFilterAttributeType + ', ''' + CONVERT(VARCHAR, @TheDate, 23) + ''', 120) AND ' 
 			          + @DateFilterAttributeName + ' < CONVERT(' + @DateFilterAttributeType + ', ''' + CONVERT(VARCHAR, @NextDate, 23) + ''', 120)' 
 			  							                  AS [FilterDataCommand]
            ,CONVERT(VARCHAR, @TheDate,112)                AS [LowWaterMark]
            ,CONVERT(VARCHAR, @NextDate,112)               AS [HighWaterMark]
-           ,@DestinationSchema AS [DestinationSchema]
-           ,@DestinationObject AS [DestinationObject]
-           ,@ContainerName     AS [ContainerName]
+           ,@DestinationSchema                            AS [DestinationSchema]
+           ,@DestinationObject                            AS [DestinationObject]
+           ,@ContainerName                                AS [ContainerName]
            ,COALESCE(@AlternativeRootFolder, @SourceSystemName) + '/' + @LakeSchemaName + '/' + @LakeObjectName + '/'
                + CONVERT(VARCHAR, DATEPART(YEAR, @TheDate)) + '/'
                + RIGHT('00' + CONVERT(VARCHAR, DATEPART(MONTH, @TheDate)), 2) + '/'
@@ -130,13 +132,13 @@ BEGIN
                    + RIGHT('00' + CONVERT(VARCHAR, DATEPART(MONTH, DATEADD(DAY, -1, @NextDate))), 2)
                    + RIGHT('00' + CONVERT(VARCHAR, DATEPART(DAY, DATEADD(DAY, -1, @NextDate))), 2)
                ELSE '' END
-                              AS [DestinationFileName]
+                                                          AS [DestinationFileName]
            
 
-           ,@MaxRowsPerFile    AS [MaxRowsPerFile]
+           ,@MaxRowsPerFile                               AS [MaxRowsPerFile]
            ,'{"creationTime": "' + CONVERT(VARCHAR, @TheDate) + '"}'  -- Take the last day of the month       
-                                  AS [AdditionalContext]
-           ,@IngestionMappingName AS [IngestionMappingName]
+                                                          AS [AdditionalContext]
+           ,@IngestionMappingName                         AS [IngestionMappingName]
 
 
            ,CONVERT(VARCHAR, DATEPART(YEAR, @TheDate))
@@ -146,7 +148,7 @@ BEGIN
                    + RIGHT('00' + CONVERT(VARCHAR, DATEPART(MONTH, DATEADD(DAY, -1, @NextDate))), 2)
                    + RIGHT('00' + CONVERT(VARCHAR, DATEPART(DAY, DATEADD(DAY, -1, @NextDate))), 2)
                ELSE '' END
-                                 AS [ExtentFingerprint]
+                                                          AS [ExtentFingerprint]
 
 
 

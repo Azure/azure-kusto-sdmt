@@ -134,6 +134,7 @@
     <Folder Include="ScriptToGenerateMetaTestData\ToADX" />
     <Folder Include="ScriptToGenerateMetaTestData\ToLake" />
     <Folder Include="Core\Functions\" />
+    <Folder Include="ScriptToGenerateMetaTestData\ADXExport" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Core\Tables\SlicedImportObject.sql">

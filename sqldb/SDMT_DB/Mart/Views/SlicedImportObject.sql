@@ -9,7 +9,8 @@ AS
   SELECT [SlicedImportObject_Id]
         ,[SourceSystemName]     
         ,[SourceSchema]         
-        ,[SourceObject]         
+        ,[SourceObject]
+        ,[DateFilterAttributeName]
         ,[GetDataCommand]       
         ,[FilterDataCommand]    
         ,[GetDataADXCommand]    
@@ -42,7 +43,8 @@ AS
          [SlicedImportObject_Id]
         ,[SourceSystemName]     
         ,[SourceSchema]         
-        ,[SourceObject]         
+        ,[SourceObject]   
+        ,[DateFilterAttributeName]
         ,[GetDataCommand]       
         ,[FilterDataCommand]    
         ,[GetDataADXCommand]    
@@ -66,6 +68,7 @@ AS
         ,[DurationInSecond]
         ,[RowsTransferred]      
         ,[LastErrorMessage]
+        ,[RowsTransferred] / [DurationInSecond] AS [RowsPerSecond]
       ,CASE WHEN [LastStart] IS     NULL                                                                     THEN 'Ready to load'
 	        WHEN [LastStart] IS NOT NULL AND [LastSuccessEnd] IS     NULL AND [LastErrorMessage] IS     NULL THEN 'Loading'
 	        WHEN [LastStart] IS NOT NULL AND [LastSuccessEnd] IS     NULL AND [LastErrorMessage] IS NOT NULL THEN 'Stopped with Error'

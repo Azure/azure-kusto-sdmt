@@ -23,7 +23,8 @@ BEGIN
 	    ,[SourceObject] 
 	    ,[GetDataCommand] 
 	    ,[FilterDataCommand]
-        ,[GetDataCommand] + ' ' + [FilterDataCommand] AS [SelectCommand]
+        ,[GetDataCommand] + ' ' + [FilterDataCommand]       AS [SelectCommand]
+        ,[GetDataADXCommand] + ' ' + [FilterDataADXCommand] AS [SelectADXCommand]
 		 ,'.set-or-append ' + [DestinationObject] +	[Core].[GetADXcreationTimeAndTags] ([AdditionalContext], @SlicedImportObject_Id, @PipelineRunId, [ExtentFingerprint], [GetDataADXCommand])
 		    + ' <| ' + [GetDataADXCommand] + '(' + [LowWaterMark] + ')'                         AS [ADXFetchCommand]
 		 ,'.set-or-append ' + [DestinationObject] +	[Core].[GetADXcreationTimeAndTags] ([AdditionalContext], @SlicedImportObject_Id, @PipelineRunId, [ExtentFingerprint], [GetDataADXCommand])

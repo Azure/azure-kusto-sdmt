@@ -9,6 +9,7 @@
     [HighWaterMark]           VARCHAR  (10)    NULL,
     [FilterDataCommand]       NVARCHAR (1024)  NULL,
     [GetDataADXCommand]       NVARCHAR (MAX)   NULL,
+    [FilterDataADXCommand]    NVARCHAR (1024)  NULL,
     [DestinationSchema]       [sysname]        NULL,
     [DestinationObject]       [sysname]        NULL,
     [ContainerName]           [sysname]        NULL,

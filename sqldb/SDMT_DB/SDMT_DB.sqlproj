@@ -198,6 +198,9 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
+    <None Include="ScriptToGenerateMetaTestData\ToADX\SQLToFabricADX_CopyActivity.sql" />
+    <None Include="ScriptToGenerateMetaTestData\ToADX\SQLToFabricADX_ADXFunction.sql" />
+    <None Include="ScriptToGenerateMetaTestData\ToADX\ADXToFabricADX_CopyActivity.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

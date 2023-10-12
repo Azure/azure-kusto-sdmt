@@ -3,7 +3,9 @@
 ## Overview
 
 If data is migrated from an on-premises system to a modern data warehouse or in an Azure Data eXplorer (ADX) database, then often historical data, must be migrated to the new data services in Azure. </br>
-The sliced data migration toolbox provides framework components to simplify the data migration.
+The sliced data migration toolbox (SMDT) provides framework components to simplify the data migration.
+
+SMDT is also compatible with Microsoft Fabric and can be used to migrate data from your existing data stores to Microsoft Fabric, if they are not accessible via Shortcuts.
 
 </br>
 </br>
@@ -44,6 +46,7 @@ The toolbox provides the following main benefits:
   * Data transfer workload can scale out over different integration runtimes to optimize performance.
   * If a slice fails, then it can be restarted, without data duplication.
 * 	The ADX property “creationTime” is set correctly. 
+  * The correct setting of "creationTime" is essential for the ADX caching policy. [CreationTime](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/management/extents-overview#extent-creation-time)
 * 	Each data transfer is logged in the meta data database (duration, number of rows transferred) and ADX tags provide additional information to each extent.
     * "LoadedAt: <UTCDateTime of the start of the data transfer of this slice>"
     * "SlicedImportObject_Id:<Primary key value of the slice in the SDMT meta data database>"

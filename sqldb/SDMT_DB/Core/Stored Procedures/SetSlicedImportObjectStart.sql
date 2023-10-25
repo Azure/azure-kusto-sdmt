@@ -18,6 +18,7 @@ BEGIN
     -- Select all attributes for the given SlicedImportObject_Id
     SELECT 
 	     [SlicedImportObject_Id]
+        ,[SlicedImportObject_Nr]
         ,[SourceSystemName] 
 	    ,[SourceSchema] 
 	    ,[SourceObject] 

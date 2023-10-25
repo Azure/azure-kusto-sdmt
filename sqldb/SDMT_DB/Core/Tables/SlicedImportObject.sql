@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [Core].[SlicedImportObject] (
-    [SlicedImportObject_Id] UNIQUEIDENTIFIER CONSTRAINT [Core_SlicedImportObject_id_df] DEFAULT (newsequentialid()) NOT NULL,
+    [SlicedImportObject_Id]   UNIQUEIDENTIFIER CONSTRAINT [Core_SlicedImportObject_id_df] DEFAULT (newsequentialid()) NOT NULL,
+    [SlicedImportObject_Nr]   INT              DEFAULT (NEXT VALUE FOR [Core].[Nr]) NOT NULL,
     [SourceSystemName]        [sysname]        NOT NULL,
     [SourceSchema]            [sysname]        NOT NULL,
     [SourceObject]            [sysname]        NOT NULL,

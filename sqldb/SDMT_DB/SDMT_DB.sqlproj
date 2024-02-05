@@ -136,6 +136,7 @@
     <Folder Include="Core\Functions\" />
     <Folder Include="ScriptToGenerateMetaTestData\ADXExport" />
     <Folder Include="Core\Sequences" />
+    <Folder Include="ScriptToGenerateMetaTestData\SQLToSQL" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Core\Tables\SlicedImportObject.sql">
@@ -203,6 +204,9 @@
     <None Include="ScriptToGenerateMetaTestData\ToADX\SQLToFabricADX_ADXFunction.sql" />
     <None Include="ScriptToGenerateMetaTestData\ToADX\ADXToFabricADX_CopyActivity.sql" />
     <Build Include="Core\Sequences\Nr.sql" />
+    <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToSQL.sql" />
+    <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToLakeMultipleFileToSQL.sql" />
+    <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToLakeSingleFileToSQL.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

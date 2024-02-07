@@ -35,4 +35,6 @@
     CONSTRAINT [Core_SlicedImportObject_pk] PRIMARY KEY CLUSTERED ([SlicedImportObject_Id] ASC),
 )WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [Core].[SlicedImportObjectHistory])
 );
+GO
 
+CREATE INDEX [IX_SlicedImportObject_SourceSystemName_SourceSchema_SourceObject] ON [Core].[SlicedImportObject] ([SourceSystemName], [SourceSchema], [SourceObject])

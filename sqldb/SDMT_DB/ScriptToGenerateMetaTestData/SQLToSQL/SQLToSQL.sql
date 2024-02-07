@@ -60,7 +60,7 @@ SELECT *
 FROM   [Mart].[SlicedImportObject]
 WHERE  SourceSystemName  = 'SQLToSQL'
 
-
+-----------------------------------------------------
 
 -- If you specify the @GetDataCommand then it will be use to define the query used to get data
 
@@ -90,3 +90,27 @@ SELECT *
 FROM   [Mart].[SlicedImportObject]
 WHERE  SourceSystemName  = 'SQLToSQL'
 
+
+
+-----------------------------------------------------
+
+
+-- Show and explain Pipeline Start
+DECLARE @RC int
+DECLARE @SourceSystemName sysname           = 'SQLToSQL'
+DECLARE @SourceSchema sysname               = '%'
+DECLARE @SourceObject sysname               = '%'
+DECLARE @SlicedImportObject_Id varchar(64)  = '%'
+DECLARE @Mode varchar(25)                   = 'ALL'      -- 'ALL', 'REGULAR', 'RESTART'
+DECLARE @OrderByFactor int                  = 1
+
+-- TODO: Set parameter values here.
+
+EXECUTE @RC = [Core].[GetSetSlicedImportObjectToLoad] 
+   @SourceSystemName             
+  ,@SourceSchema
+  ,@SourceObject
+  ,@SlicedImportObject_Id
+  ,@Mode
+  ,@OrderByFactor
+GO

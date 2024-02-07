@@ -207,6 +207,11 @@
     <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToSQL.sql" />
     <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToLakeMultipleFileToSQL.sql" />
     <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToLakeSingleFileToSQL.sql" />
+    <Build Include="Core\Tables\PartitionInfo.sql">
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <None Include="ScriptToGenerateMetaTestData\SQLToSQL\SQLToSQLPartitionedTable.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

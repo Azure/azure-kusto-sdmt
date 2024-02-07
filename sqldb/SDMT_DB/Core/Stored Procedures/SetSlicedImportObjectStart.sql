@@ -1,6 +1,7 @@
-﻿CREATE PROCEDURE [Core].[SetSlicedImportObjectStart]
-    @SlicedImportObject_Id UNIQUEIDENTIFIER
-   ,@PipelineRunId         VARCHAR(128) 
+﻿
+CREATE PROCEDURE [Core].[SetSlicedImportObjectStart]
+    @SlicedImportObject_Id UNIQUEIDENTIFIER 
+   ,@PipelineRunId         VARCHAR(128)     
 AS
 BEGIN
     SET NOCOUNT ON
@@ -16,7 +17,11 @@ BEGIN
     WHERE [SlicedImportObject_Id] = @SlicedImportObject_Id;
 
     -- Select all attributes for the given SlicedImportObject_Id
-    SELECT 
+
+	;WITH BaseSliceInfo
+	AS
+	(
+      SELECT 
 	     [SlicedImportObject_Id]
         ,[SlicedImportObject_Nr]
         ,[SourceSystemName] 
@@ -37,6 +42,7 @@ BEGIN
 		 ,'.export to table  ' + [DestinationObject] + ' <| ' + [SourceObject] + ' | where startofday(' + [DateFilterAttributeName] + ') >= todatetime(''' + [LowWaterMark] +''') and startofday(' + [DateFilterAttributeName] + ') < todatetime(''' + [HighWaterMark] +''')  ' AS [ADXExportCommand]
 	    ,[DestinationSchema] 
 	    ,[DestinationObject] 
+	    ,[DestinationObject] + '_' + [LowWaterMark] AS [PartitionedDestinationObject] 
 		,[ContainerName]
 	    ,[DestinationPath] 
 	    ,[DestinationFileName] 
@@ -62,6 +68,33 @@ BEGIN
 		,[IngestionMappingName]
 	    ,[LastStart] 
     FROM [Core].[SlicedImportObject]
-    WHERE [SlicedImportObject_Id] = @SlicedImportObject_Id;
+    WHERE [SlicedImportObject_Id] = @SlicedImportObject_Id
+	)
+	SELECT BaseSliceInfo.*
+	       , 'DROP TABLE IF EXISTS ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + '; ' + CHAR(13) + CHAR(10)
+		   + 'SELECT * INTO ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + ' FROM ' + [DestinationSchema] + '.' + [DestinationObject] + ' WHERE 1=2; ' + CHAR(13) + CHAR(10)
+		   +  REPLACE(REPLACE([TableIndex]      , '@@TableName@@', [PartitionedDestinationObject]) , '@@SchemName@@', [DestinationSchema] ) +'; ' + CHAR(13) + CHAR(10)
+		   +  REPLACE(REPLACE([TableConstraints], '@@TableName@@', [PartitionedDestinationObject]) , '@@SchemName@@', [DestinationSchema] ) +'; ' + CHAR(13) + CHAR(10)
+		   +  'ALTER TABLE ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + ' ADD CONSTRAINT CHECK_PartitionRange_' + [DestinationSchema] + '_' + [PartitionedDestinationObject] + ' CHECK (' + REPLACE([FilterDataCommand],'WHERE ','') + ');'+ CHAR(13) + CHAR(10)
+		   +  'SELECT 5 AS DummyResult; ' + CHAR(13) + CHAR(10)
+		                                                                                                                                                              AS  [PrecreatePartitionedStageTable]
+
+	       , 'DROP TABLE IF EXISTS ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + '_OUT; ' + CHAR(13) + CHAR(10)
+		   + 'SELECT * INTO ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + '_out' + ' FROM ' + [DestinationSchema] + '.' + [DestinationObject] + ' WHERE 1=2; ' + CHAR(13) + CHAR(10)
+		   +  REPLACE(REPLACE([TableIndex]      , '@@TableName@@', [PartitionedDestinationObject] + '_out') , '@@SchemName@@', [DestinationSchema] ) +'; ' + CHAR(13) + CHAR(10)
+		   +  REPLACE(REPLACE([TableConstraints], '@@TableName@@', [PartitionedDestinationObject] + '_out') , '@@SchemName@@', [DestinationSchema] ) +'; ' + CHAR(13) + CHAR(10)
+           + 'ALTER TABLE ' + [DestinationSchema] + '.' + [DestinationObject] + ' SWITCH PARTITION $PARTITION.demoPartitionPF('''  + CONVERT(VARCHAR, CONVERT(datetime2(3),[ExtentFingerprint],112)) + ''')    TO ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + '_OUT; ' + CHAR(13) + CHAR(10)
+		   + 'ALTER TABLE ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + ' SWITCH TO  ' + [DestinationSchema] + '.' + [DestinationObject] + ' PARTITION $PARTITION.demoPartitionPF('''  + CONVERT(VARCHAR, CONVERT(datetime2(3),[ExtentFingerprint],112)) + ''') ' + CHAR(13) + CHAR(10)
+		   + 'DROP TABLE IF EXISTS ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + ';     ' + CHAR(13) + CHAR(10)
+		   + 'DROP TABLE IF EXISTS ' + [DestinationSchema] + '.' + [PartitionedDestinationObject] + '_OUT; ' + CHAR(13) + CHAR(10)
+		   +  'SELECT 5 AS DummyResult; ' + CHAR(13) + CHAR(10)
+		                                                                                                                                                              AS  [SwitchInPartitionedStageTable]
+
+	FROM BaseSliceInfo
+	  LEFT OUTER JOIN [Core].[PartitionInfo]
+	    ON BaseSliceInfo.[SourceSystemName] = [PartitionInfo].[SourceSystemName]
+	   AND BaseSliceInfo.[SourceSchema]     = [PartitionInfo].[SourceSchema]
+	   AND BaseSliceInfo.[SourceObject]     = [PartitionInfo].[SourceObject]
+	
 	
 END;
